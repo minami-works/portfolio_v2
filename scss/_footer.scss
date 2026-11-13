@@ -1,0 +1,43 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.footer {
+  background-color: var(--color-sub-bg);
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    max-width: $content-width;
+    margin-inline: auto;
+    padding: 32px 24px;
+
+    @include pc {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-inline: 40px;
+    }
+  }
+
+  &__copy {
+    @include text(13px, 24px);
+    color: var(--color-sub-text);
+  }
+
+  &__nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__link {
+    @include text(13px, 24px);
+    color: var(--color-sub-text);
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--color-green-text);
+      }
+    }
+  }
+}

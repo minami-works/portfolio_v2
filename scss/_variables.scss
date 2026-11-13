@@ -1,0 +1,75 @@
+// =========================================================
+// 変数
+// 色は「ダークモードで入れ替える」ため CSSカスタムプロパティ（--〇〇）で定義。
+// SCSS変数（$〇〇）はダークモードで変わらない値だけに使う。
+// =========================================================
+
+// ---------- フォント ----------
+// やわらかく、読み手が話しかけやすい印象の丸ゴシック1ファミリーだけを使う
+$font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+
+// ---------- 8pxグリッド ----------
+// 行間（line-height）と上下の余白は、すべて 8px の倍数でそろえる。
+//   例：本文 16px / 行間 32px、補足 14px / 行間 24px
+// 数値を書くときは「8・16・24・32・40・48…」のどれかになっているかを確認する。
+$unit: 8px;
+
+// ---------- レイアウト ----------
+$content-width: 1040px;   // 左右の余白込みの最大幅
+$header-height: 64px;
+$breakpoint: 761px;       // ここ以上をPC表示とする（モバイルファースト）
+
+// ---------- 角丸（大きい面ほど大きく） ----------
+$radius-s: 8px;    // タグ・入力欄・小さいボタン
+$radius-m: 16px;   // 画像・カード
+$radius-l: 24px;   // 大きな面（お問い合わせの枠など）
+
+// ---------- 色 ----------
+// 北海道の「雪・苔・松葉」をイメージした、落ち着いた自然系の配色
+:root {
+  // 背景
+  --color-bg: #f7f7f3;          // 雪の白（基本の背景）
+  --color-bg-gray: #eceee7;     // 薄い苔（交互のセクション）
+  --color-bg-header: rgb(247 247 243 / 0.92);
+  --color-bg-card: #ffffff;     // カード・入力欄の面
+  // 線
+  --color-line: #dcdfd6;        // 薄い区切り線
+  --color-line-strong: #b7bdb3; // 表の上下など少しだけ強い線
+  --color-line-input: #c3c8bf;
+  // 文字
+  --color-text: #2f3532;        // 墨（見出し・本文）
+  --color-text-sub: #535b56;    // 補足の本文
+  --color-text-muted: #6b736d;  // ラベル
+  --color-text-faint: #9aa19b;  // プレースホルダー
+  // アクセント（松葉グリーン）
+  --color-green: #3e6b4f;       // ボタン
+  --color-green-text: #3e6b4f;  // 緑の文字
+  --color-green-light: #9db7a3; // 線・装飾
+  --color-on-green: #ffffff;    // 緑ボタン上の文字
+  // サブカラー（タグ・フッター）
+  --color-sub-bg: #e1e8de;
+  --color-sub-text: #405446;
+}
+
+// ダークモード（<html class="is-dark">）：夜の森をイメージ
+.is-dark {
+  --color-bg: #1f2420;
+  --color-bg-gray: #262c27;
+  --color-bg-header: rgb(31 36 32 / 0.92);
+  --color-bg-card: #2b322d;
+  --color-line: #39413b;
+  --color-line-strong: #56605a;
+  --color-line-input: #4c554f;
+  --color-text: #e6e9e3;
+  --color-text-sub: #bcc3bc;
+  --color-text-muted: #9ba39c;
+  --color-text-faint: #6c746e;
+  --color-green: #4f7e5f;
+  --color-green-text: #9cc3a6;
+  --color-green-light: #5f8a6b;
+  --color-on-green: #ffffff;
+  --color-sub-bg: #2e3730;
+  --color-sub-text: #c9d6cc;
+
+  color-scheme: dark;
+}

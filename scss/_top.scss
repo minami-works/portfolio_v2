@@ -1,0 +1,549 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// =========================================================
+// トップページ
+// 行間・上下の余白はすべて 8px の倍数
+// =========================================================
+
+// ---------- hero ----------
+.hero {
+  padding-block: 80px 96px;
+
+  @include pc {
+    padding-block: 144px 136px;
+  }
+
+  &__name {
+    @include text(15px, 24px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  &__role {
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  // ページの主役：大きくゆったりした丸ゴシックの見出し
+  &__title {
+    @include text(34px, 56px);
+    margin-top: 24px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+
+    @include pc {
+      @include text(56px, 88px);
+      margin-top: 32px;
+    }
+  }
+
+  &__lead {
+    max-width: 36em;
+    margin-top: 32px;
+    color: var(--color-text-sub);
+  }
+
+  // ● ただいまご依頼を受け付けています
+  &__status {
+    @include text(14px, 24px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    color: var(--color-green-text);
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: var(--color-green);
+      border-radius: 50%;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
+  }
+}
+
+// ---------- about ----------
+.about {
+  display: grid;
+  gap: 40px;
+
+  @include pc {
+    grid-template-columns: 3fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  &__text {
+    color: var(--color-text-sub);
+
+    & + & {
+      margin-top: 24px;
+    }
+  }
+
+  // 右側のプロフィールカード（似顔絵＋基本情報）
+  &__card {
+    padding: 24px 24px 8px;
+    background-color: var(--color-bg-card);
+    border-radius: $radius-m;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  // 似顔絵：透過画像を丸い背景にのせる
+  &__avatar {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+    padding: 4px;
+    background-color: var(--color-sub-bg);
+    border-radius: 50%;
+  }
+
+  &__name {
+    @include text(18px, 32px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  &__role {
+    @include text(13px, 24px);
+    color: var(--color-text-muted);
+  }
+
+  &__fact {
+    display: grid;
+    grid-template-columns: 6em 1fr;
+    gap: 16px;
+    padding-block: 16px;
+
+    & + & {
+      border-top: 1px solid var(--color-line);
+    }
+  }
+
+  &__fact-key {
+    @include text(14px, 24px);
+    color: var(--color-text-muted);
+  }
+
+  &__fact-value {
+    @include text(14px, 24px);
+    color: var(--color-text);
+
+    // ● ご依頼受付中
+    &--status::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      vertical-align: 1px;
+      background-color: var(--color-green);
+      border-radius: 50%;
+    }
+  }
+}
+
+// ---------- skills（表） ----------
+.skills {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  &__head {
+    @include text(13px, 24px);
+    padding-bottom: 8px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-line-strong);
+  }
+
+  &__row {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  &__name,
+  &__note {
+    padding-block: 24px;
+    vertical-align: top;
+  }
+
+  &__name {
+    @include text(15px, 32px);
+    width: 120px;
+    padding-right: 16px;
+    font-weight: 700;
+
+    @include pc {
+      width: 200px;
+    }
+  }
+
+  &__note {
+    @include text(15px, 32px);
+    color: var(--color-text-sub);
+  }
+}
+
+// ---------- works：絞り込みボタン ----------
+.works-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+
+  &__button {
+    @include text(14px, 24px);
+    padding: 8px 16px;
+    color: var(--color-text-sub);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+    &.is-active {
+      color: var(--color-on-green);
+      background-color: var(--color-green);
+      border-color: var(--color-green);
+    }
+
+    @media (any-hover: hover) {
+      &:not(.is-active):hover {
+        border-color: var(--color-green-light);
+      }
+    }
+  }
+}
+
+// ---------- works：一覧 ----------
+.works {
+  display: grid;
+  gap: 24px;
+
+  &__empty {
+    padding-block: 32px;
+    color: var(--color-text-sub);
+  }
+}
+
+.work-card {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+  background-color: var(--color-bg-card);
+  border-radius: $radius-l;
+
+  @include pc {
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    align-items: center;
+    padding: 40px;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__title {
+    @include text(21px, 32px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  &__subtitle {
+    @include text(14px, 24px);
+    color: var(--color-text-muted);
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-top: 24px;
+  }
+
+  // SPでは画像を上に
+  &__thumb {
+    order: -1;
+    display: block;
+    overflow: hidden;
+    background-color: var(--color-bg-gray);
+    border-radius: $radius-m;
+
+    @include pc {
+      order: 0;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+  }
+}
+
+// 担当 / 使用技術 / 制作期間（一覧・詳細で共通）
+.work-meta {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 6em 1fr;
+    gap: 16px;
+  }
+
+  &__key {
+    @include text(13px, 24px);
+    color: var(--color-text-muted);
+  }
+
+  &__value {
+    @include text(14px, 24px);
+  }
+
+  // 詳細ページ版：PCでは3列に並べ、上下に線
+  &--detail {
+    margin-top: 40px;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+
+    @include pc {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+
+      .work-meta__item {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    .work-meta__value {
+      @include text(15px, 32px);
+    }
+  }
+}
+
+// ---------- pricing ----------
+.price-table {
+  border-top: 1px solid var(--color-line-strong);
+  border-bottom: 1px solid var(--color-line-strong);
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    align-items: center;
+    padding-block: 24px;
+
+    @include pc {
+      grid-template-columns: 200px 1fr auto;
+      gap: 32px;
+    }
+  }
+
+  &__name {
+    @include text(16px, 32px);
+    font-weight: 700;
+  }
+
+  // SP：料金の下に注記
+  &__note {
+    @include text(14px, 24px);
+    grid-column: 1 / -1;
+    grid-row: 2;
+    color: var(--color-text-muted);
+
+    @include pc {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+
+  &__price {
+    @include text(20px, 32px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+}
+
+.pricing {
+  &__sub {
+    @include text(14px, 24px);
+    margin-top: 16px;
+    color: var(--color-text-sub);
+  }
+
+  &__notes {
+    display: grid;
+    gap: 16px;
+    margin-top: 40px;
+
+    @include pc {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+  }
+}
+
+.note-box {
+  padding: 24px;
+  background-color: var(--color-bg-gray);
+  border-radius: $radius-m;
+
+  &__title {
+    @include text(16px, 32px);
+    font-weight: 700;
+  }
+
+  &__text {
+    @include text(14px, 32px);
+    margin-top: 8px;
+    color: var(--color-text-sub);
+  }
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+  padding: 32px 24px;
+  background-color: var(--color-sub-bg);
+  border-radius: $radius-l;
+
+  @include pc {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px 48px;
+  }
+
+  &__title {
+    @include text(20px, 32px);
+    font-weight: 700;
+    color: var(--color-sub-text);
+  }
+
+  &__text {
+    @include text(14px, 24px);
+    margin-top: 8px;
+    color: var(--color-text-sub);
+  }
+
+  &__button {
+    flex-shrink: 0;
+  }
+}
+
+// ---------- contact ----------
+.contact {
+  display: grid;
+  gap: 40px;
+
+  @include pc {
+    grid-template-columns: 2fr 3fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  &__text {
+    margin-top: 24px;
+    color: var(--color-text-sub);
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 32px;
+  }
+}
+
+.contact-form {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+  background-color: var(--color-bg-card);
+  border-radius: $radius-l;
+
+  @include pc {
+    padding: 40px;
+  }
+
+  &__row {
+    display: grid;
+    gap: 24px;
+
+    @include pc {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__label {
+    @include text(14px, 24px);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  &__input {
+    @include text(16px, 32px); // 16px未満だと iPhone で入力時にズームされる
+    width: 100%;
+    padding: 7px 16px; // 枠線1px×2 を足して高さ48px
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-line-input);
+    border-radius: $radius-s;
+    transition: border-color 0.2s, background-color 0.2s;
+
+    &::placeholder {
+      color: var(--color-text-faint);
+    }
+
+    &:focus {
+      outline: none;
+      background-color: var(--color-bg-card);
+      border-color: var(--color-green);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 20%, transparent);
+    }
+
+    &--textarea {
+      min-height: 176px; // 32px × 5行 ＋ 上下の余白・枠線 16px
+      resize: vertical;
+    }
+  }
+
+  &__submit {
+    justify-self: start;
+    margin-top: 8px;
+  }
+}

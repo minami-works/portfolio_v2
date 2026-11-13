@@ -1,0 +1,18 @@
+@use "variables" as *;
+
+// PC表示（$breakpoint 以上）
+@mixin pc {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// 文字サイズと行間をセットで指定する
+// 行間は 8px の倍数だけを使う（例：@include text(14px, 24px);）
+@mixin text($size, $line-height) {
+  @if $line-height % $unit != 0px {
+    @error "行間 #{$line-height} が8pxの倍数ではありません";
+  }
+  font-size: $size;
+  line-height: $line-height;
+}

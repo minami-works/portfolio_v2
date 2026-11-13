@@ -1,0 +1,63 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.container {
+  width: 100%;
+  max-width: $content-width;
+  margin-inline: auto;
+  padding-inline: 24px;
+
+  @include pc {
+    padding-inline: 40px;
+  }
+}
+
+// ---------- セクション共通 ----------
+.section {
+  padding-block: 72px;
+
+  @include pc {
+    padding-block: 112px;
+  }
+
+  &--gray {
+    background-color: var(--color-bg-gray);
+  }
+
+  &--pager {
+    padding-block: 48px 56px;
+  }
+
+  &__head {
+    margin-bottom: 40px;
+
+    @include pc {
+      margin-bottom: 56px;
+    }
+
+    // 見出しと右側の補足を横並びにする（詳細ページ「画面」）
+    &--split {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px 24px;
+    }
+  }
+
+  &__title {
+    @include text(24px, 40px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    @include pc {
+      @include text(30px, 48px);
+    }
+  }
+
+  &__lead {
+    @include text(15px, 32px);
+    margin-top: 16px;
+    color: var(--color-text-sub);
+  }
+}

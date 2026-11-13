@@ -1,0 +1,400 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// =========================================================
+// 実績詳細ページ（single-works.php）
+// 行間・上下の余白はすべて 8px の倍数
+// =========================================================
+
+.work-hero {
+  padding-block: 40px 72px;
+
+  @include pc {
+    padding-block: 64px 96px;
+  }
+
+  &__back {
+    @include text(14px, 24px);
+    display: inline-block;
+    margin-bottom: 32px;
+    color: var(--color-text-muted);
+
+    &::before {
+      content: "‹";
+      margin-right: 8px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--color-green-text);
+      }
+    }
+  }
+
+  &__title {
+    @include text(30px, 48px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    @include pc {
+      @include text(40px, 64px);
+    }
+  }
+
+  &__subtitle {
+    @include text(15px, 24px);
+    margin-top: 8px;
+    color: var(--color-text-muted);
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  &__image {
+    margin-top: 40px;
+    padding: 16px;
+    background-color: var(--color-bg-gray);
+    border-radius: $radius-l;
+
+    @include pc {
+      padding: 32px 40px; // モックアップは画像の中に余白があるので、枠側の余白は控えめに
+    }
+  }
+
+  &__zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background: none;
+    border: none;
+    border-radius: $radius-s;
+    cursor: zoom-in;
+  }
+
+  // ページ全体の縦長キャプチャでも、PC画面の比率（16:10）で上部だけを切り取って見せる
+  &__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &__caption {
+    @include text(13px, 24px);
+    margin-top: 8px;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-top: 24px;
+  }
+}
+
+// ---------- 概要・担当範囲 ----------
+.work-overview {
+  display: grid;
+  gap: 40px;
+
+  @include pc {
+    grid-template-columns: 3fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  &__text {
+    margin-top: 24px;
+    color: var(--color-text-sub);
+  }
+
+  &__note {
+    @include text(14px, 24px);
+    margin-top: 16px;
+    color: var(--color-text-muted);
+  }
+}
+
+.scope {
+  padding: 24px;
+  background-color: var(--color-bg-card);
+  border-radius: $radius-m;
+
+  &__title {
+    @include text(16px, 32px);
+    font-weight: 700;
+  }
+
+  &__list {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  &__item {
+    @include text(14px, 24px);
+    position: relative; // ::before の基準
+    padding-left: 16px;
+    color: var(--color-text-sub);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 9px; // 行間24pxの真ん中（12px）− 丸の半径
+      left: 0;
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-green-light);
+      border-radius: 50%;
+    }
+  }
+}
+
+// ---------- 画面 ----------
+.screens {
+  display: grid;
+  gap: 32px 24px;
+
+  @include pc {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__hint {
+    @include text(13px, 24px);
+    color: var(--color-text-muted);
+  }
+}
+
+// PC画面のキャプチャ
+.screen-shot {
+  // 1枚目は横幅いっぱい
+  @include pc {
+    &:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  // 縦長のキャプチャは、高さを決めた枠の中でスクロールして見る
+  &__frame {
+    max-height: 480px;
+    overflow-y: auto;
+    overscroll-behavior: contain; // 枠の端まで来てもページ全体はスクロールさせない
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-line);
+    border-radius: $radius-m;
+
+    @include pc {
+      max-height: 640px;
+    }
+  }
+
+  &__button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: zoom-in;
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__caption {
+    @include text(13px, 24px);
+    margin-top: 8px;
+    color: var(--color-text-muted);
+  }
+}
+
+.sp-screens {
+  margin-top: 40px;
+  padding: 24px;
+  background-color: var(--color-bg-gray);
+  border-radius: $radius-l;
+
+  @include pc {
+    padding: 32px 40px 40px;
+  }
+
+  &__label {
+    @include text(15px, 24px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+
+  // PCでは右側が空きすぎないよう、スマホ画面を中央に並べる
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 220px));
+    gap: 16px;
+
+    @include pc {
+      grid-template-columns: repeat(2, 240px);
+      justify-content: center;
+      gap: 64px;
+    }
+  }
+}
+
+// スマホ風の枠
+.phone-frame {
+  &__button {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-line);
+    border-radius: 28px;
+    cursor: zoom-in;
+  }
+
+  &__img {
+    width: 100%;
+    aspect-ratio: 9 / 19;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 22px;
+  }
+
+  &__caption {
+    @include text(13px, 24px);
+    margin-top: 8px;
+    text-align: center;
+    word-break: auto-phrase; // 「トップページ（全 / 体）」のような途中改行を防ぐ
+    color: var(--color-text-muted);
+  }
+}
+
+// 拡大表示（<dialog>）
+.lightbox {
+  max-width: min(1100px, 92vw);
+  max-height: 90vh;
+  padding: 0;
+  overflow: auto;
+  background: none;
+  border: none;
+
+  &::backdrop {
+    background-color: rgb(31 36 32 / 0.8);
+  }
+
+  &__img {
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+    border-radius: $radius-s;
+  }
+
+  &__close {
+    position: sticky;
+    top: 8px;
+    float: right;
+    width: 40px;
+    height: 40px;
+    margin: 8px;
+    font-size: 20px;
+    line-height: 1;
+    color: #fff;
+    background-color: rgb(31 36 32 / 0.7);
+    border: none;
+    border-radius: 50%;
+  }
+}
+
+// ---------- 工夫した点 ----------
+// 順番に意味はないので番号は付けない。
+// 項目数が奇数でも片側が空かないよう、1列で読みやすい幅に並べる
+.notes {
+  display: grid;
+  gap: 16px;
+  max-width: 800px;
+
+  &__item {
+    @include text(15px, 32px);
+    padding: 24px 32px;
+    background-color: var(--color-bg-gray);
+    border-radius: $radius-m;
+  }
+}
+
+// ---------- 前後の作品 ----------
+.pager {
+  display: grid;
+  gap: 16px;
+
+  @include pc {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__head {
+    @include text(14px, 24px);
+    margin-bottom: 16px;
+    color: var(--color-text-muted);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background-color: var(--color-bg-card);
+    border: 1px solid transparent;
+    border-radius: $radius-m;
+    transition: border-color 0.2s;
+
+    &--next {
+      text-align: right;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        border-color: var(--color-green-light);
+      }
+    }
+  }
+
+  &__dir {
+    @include text(13px, 24px);
+    color: var(--color-green-text);
+
+    .pager__card--prev &::before {
+      content: "‹";
+      margin-right: 8px;
+    }
+
+    .pager__card--next &::after {
+      content: "›";
+      margin-left: 8px;
+    }
+  }
+
+  &__title {
+    @include text(16px, 32px);
+    font-weight: 700;
+  }
+
+  &__sub {
+    @include text(13px, 24px);
+    color: var(--color-text-muted);
+  }
+
+  &__back {
+    margin-top: 32px;
+    text-align: center;
+  }
+}
+
+// 404・予備テンプレート
+.page-content {
+  > * + * {
+    margin-top: 24px;
+  }
+}
