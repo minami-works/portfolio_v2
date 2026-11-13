@@ -6,7 +6,7 @@
     <div class="hero__inner container">
       <p class="hero__name">Minami Gouda<span class="hero__role">北海道のWebコーダー</span></p>
       <h1 class="hero__title" id="hero-title">確認を先に、<br>手戻りを少なく。</h1>
-      <p class="hero__lead">Figmaカンプからのコーディングとレスポンシブ対応を中心に、LP制作をお手伝いしています。気になる点は作業の前にまとめて確認し、手戻りの少ない進行を心がけています。</p>
+      <p class="hero__lead">LP制作を中心に、WordPressでの更新しやすいサイトづくりまでお手伝いしています。気になる点は作業の前にまとめて確認し、手戻りの少ない進行を心がけています。</p>
       <p class="hero__status">ただいまご依頼を受け付けています</p>
       <div class="hero__buttons">
         <a class="button button--primary" href="#contact">相談してみる</a>
@@ -47,7 +47,7 @@
             </div>
             <div class="about__fact">
               <dt class="about__fact-key">得意なこと</dt>
-              <dd class="about__fact-value">LP制作、Figmaカンプからのコーディング</dd>
+              <dd class="about__fact-value">LP制作、WordPressでのサイト制作</dd>
             </div>
             <div class="about__fact">
               <dt class="about__fact-key">返信</dt>

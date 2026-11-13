@@ -252,6 +252,19 @@ button {
   background-color: var(--color-bg-header);
   backdrop-filter: blur(8px);
 }
+.admin-bar .header {
+  top: 32px;
+}
+@media (max-width: 782px) {
+  .admin-bar .header {
+    top: 46px;
+  }
+}
+@media (max-width: 600px) {
+  .admin-bar .header {
+    top: 0;
+  }
+}
 .header__inner {
   display: flex;
   align-items: center;

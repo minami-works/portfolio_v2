@@ -9,6 +9,20 @@
   background-color: var(--color-bg-header);
   backdrop-filter: blur(8px);
 
+  // ログイン中は WordPress の管理バー（上部の黒い帯）の下に固定する
+  // 管理バーの高さ：PC 32px / 782px以下 46px / 600px以下は画面に固定されないので 0
+  .admin-bar & {
+    top: 32px;
+
+    @media (max-width: 782px) {
+      top: 46px;
+    }
+
+    @media (max-width: 600px) {
+      top: 0;
+    }
+  }
+
   &__inner {
     display: flex;
     align-items: center;

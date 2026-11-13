@@ -57,7 +57,7 @@ add_action('wp_head', 'mw2_theme_mode_script', 1);
    ※ SEOプラグイン（Yoast・SEO SIMPLE PACK など）を入れる場合は、
      同じタグが二重に出るので、この関数の add_action を消してください */
 function mw2_ogp() {
-  $default_description = '北海道のWebコーダー Minami Gouda のポートフォリオ。Figmaカンプからのコーディングとレスポンシブ対応を中心に、LP制作をお手伝いしています。';
+  $default_description = '北海道のWebコーダー Minami Gouda のポートフォリオ。LP制作を中心に、WordPressでの更新しやすいサイトづくりまでお手伝いしています。';
 
   if (is_singular('works')) {
     // 実績の詳細ページ：概要の冒頭を説明文にする
