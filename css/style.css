@@ -1114,12 +1114,7 @@ button {
 
 .screens {
   display: grid;
-  gap: 32px 24px;
-}
-@media (min-width: 761px) {
-  .screens {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: 40px;
 }
 .screens__hint {
   font-size: 13px;
@@ -1127,11 +1122,6 @@ button {
   color: var(--color-text-muted);
 }
 
-@media (min-width: 761px) {
-  .screen-shot:first-child {
-    grid-column: 1/-1;
-  }
-}
 .screen-shot__frame {
   max-height: 480px;
   overflow-y: auto;

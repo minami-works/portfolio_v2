@@ -158,13 +158,11 @@
 }
 
 // ---------- 画面 ----------
+// PC画面は1枚でも2枚でも、それぞれ横幅いっぱいで縦に並べる
+// （2列にすると、2枚目が半分の幅になって右側が空いてしまうため）
 .screens {
   display: grid;
-  gap: 32px 24px;
-
-  @include pc {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: 40px;
 
   &__hint {
     @include text(13px, 24px);
@@ -174,13 +172,6 @@
 
 // PC画面のキャプチャ
 .screen-shot {
-  // 1枚目は横幅いっぱい
-  @include pc {
-    &:first-child {
-      grid-column: 1 / -1;
-    }
-  }
-
   // 縦長のキャプチャは、高さを決めた枠の中でスクロールして見る
   &__frame {
     max-height: 480px;
