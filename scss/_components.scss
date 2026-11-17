@@ -15,6 +15,12 @@
   -webkit-tap-highlight-color: transparent; // 押した時の縮みと、スマホの灰色のハイライトが二重にならないように
   transition: background-color 0.15s ease-out, border-color 0.15s ease-out, color 0.15s ease-out, scale 0.15s ease-out;
 
+  // 送信中など、押せない状態
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
   // 押した時に少しだけ縮んで手応えを出す（「動きを減らす」設定の人には出さない）
   @media (prefers-reduced-motion: no-preference) {
     &:not(:disabled):active {

@@ -116,6 +116,8 @@
             <button class="works-filter__button" type="button" data-filter="<?php echo esc_attr($tag->slug); ?>" aria-pressed="false"><?php echo esc_html($tag->name); ?></button>
           <?php endforeach; ?>
         </div>
+        <!-- 絞り込みの結果（件数）を画面読み上げで知らせる。見た目には表示しない -->
+        <p class="visually-hidden js-works-status" role="status"></p>
       <?php endif; ?>
 
       <?php
@@ -171,8 +173,12 @@
               </div>
 
               <a class="work-card__thumb" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
-                <?php if ($image) : ?>
-                  <img class="work-card__img" src="<?php echo esc_url(mw2_image_url($image, 'medium_large')); ?>" alt="" loading="lazy">
+                <?php if ($image) :
+                  // 画像の縦横サイズ（読み込み前に場所を確保して、表示のガタつきを防ぐ）
+                  $img_w = $image['sizes']['medium_large-width'] ?? $image['width'];
+                  $img_h = $image['sizes']['medium_large-height'] ?? $image['height'];
+                ?>
+                  <img class="work-card__img" src="<?php echo esc_url(mw2_image_url($image, 'medium_large')); ?>" alt="" width="<?php echo esc_attr($img_w); ?>" height="<?php echo esc_attr($img_h); ?>" loading="lazy">
                 <?php elseif (has_post_thumbnail()) : ?>
                   <?php the_post_thumbnail('large', array('class' => 'work-card__img', 'alt' => '', 'loading' => 'lazy')); ?>
                 <?php endif; ?>
@@ -238,7 +244,7 @@
       </div>
 
       <!-- 送信先は現サイトと同じ Formspree -->
-      <form class="contact-form" action="https://formspree.io/f/mkokgbld" method="POST">
+      <form class="contact-form js-contact-form" action="https://formspree.io/f/mkokgbld" method="POST">
         <div class="contact-form__row">
           <div class="contact-form__field">
             <label class="contact-form__label" for="cf-name">お名前</label>
@@ -246,12 +252,12 @@
           </div>
           <div class="contact-form__field">
             <label class="contact-form__label" for="cf-email">メールアドレス</label>
-            <input class="contact-form__input" id="cf-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <input class="contact-form__input" id="cf-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" spellcheck="false" required>
           </div>
         </div>
         <div class="contact-form__field">
           <label class="contact-form__label" for="cf-message">ご相談内容</label>
-          <textarea class="contact-form__input contact-form__input--textarea" id="cf-message" name="message" rows="5" placeholder="ご依頼内容・ご予算・納期など、わかる範囲でお書きください" required></textarea>
+          <textarea class="contact-form__input contact-form__input--textarea" id="cf-message" name="message" rows="5" autocomplete="off" placeholder="ご依頼内容・ご予算・納期など、わかる範囲でお書きください" required></textarea>
         </div>
         <button class="button button--primary contact-form__submit" type="submit">送信する</button>
       </form>

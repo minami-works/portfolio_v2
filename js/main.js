@@ -3,6 +3,7 @@
    1. ハンバーガーメニュー
    2. ダークモード切り替え
    3. Works の絞り込み
+   3-2. お問い合わせフォームの二重送信防止
    4. 画面キャプチャの拡大表示（詳細ページ）
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filter = document.querySelector('.js-works-filter');
   const cards = document.querySelectorAll('.js-work-card');
   const empty = document.querySelector('.js-works-empty');
+  const status = document.querySelector('.js-works-status');
 
   if (filter && cards.length) {
     const buttons = filter.querySelectorAll('[data-filter]');
@@ -89,6 +91,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (show) visible++;
       });
       if (empty) empty.hidden = visible > 0;
+      // 画面読み上げ用：role="status" の中身を書き換えると、その文が読み上げられる
+      if (status) {
+        status.textContent = visible > 0
+          ? `${button.textContent.trim()}：${visible}件の実績を表示しています`
+          : 'この条件に合う実績はありません';
+      }
+    });
+  }
+
+  /* ---------- 3-2. お問い合わせフォームの二重送信を防ぐ ---------- */
+  // submit イベントは、required などの入力チェックを通った時だけ発生する
+  const contactForm = document.querySelector('.js-contact-form');
+
+  if (contactForm) {
+    const submitButton = contactForm.querySelector('[type="submit"]');
+    const submitLabel = submitButton.textContent;
+
+    contactForm.addEventListener('submit', () => {
+      // 送信が始まったらボタンを押せなくする（送信そのものは止まらない）
+      submitButton.disabled = true;
+      submitButton.textContent = '送信中…';
+    });
+
+    // 送信後にブラウザの「戻る」で戻ってきた時、ボタンが押せないままにならないよう元に戻す
+    window.addEventListener('pageshow', () => {
+      submitButton.disabled = false;
+      submitButton.textContent = submitLabel;
     });
   }
 
