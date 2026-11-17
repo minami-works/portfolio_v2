@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main id="main">
   <!-- ========== hero ========== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__inner container">

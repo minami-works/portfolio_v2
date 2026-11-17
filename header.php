@@ -7,6 +7,8 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<!-- キーボード操作の人向け：Tabキーを最初に押すと表示され、ナビを飛ばして本文へ移動できる -->
+<a class="skip-link" href="#main">本文へスキップ</a>
 <?php
   // トップページではページ内リンク、それ以外ではトップに戻ってから移動
   $home = is_front_page() ? '' : home_url('/');

@@ -536,8 +536,10 @@
       color: var(--color-text-faint);
     }
 
-    &:focus {
-      outline: none;
+    &:focus-visible {
+      // outline: none ではなく「透明な線」にしておく。
+      // 普段は見えないが、Windowsのハイコントラストモードでは影が消える代わりにこの線が表示され、フォーカス位置がわかる
+      outline: 2px solid transparent;
       background-color: var(--color-bg-card);
       border-color: var(--color-green);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 20%, transparent);

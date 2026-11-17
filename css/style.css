@@ -222,6 +222,24 @@ button {
   }
 }
 
+.skip-link {
+  font-size: 14px;
+  line-height: 24px;
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  font-weight: 500;
+  color: var(--color-on-green);
+  background-color: var(--color-green);
+  border-radius: 8px;
+  translate: 0 -200%;
+}
+.skip-link:focus {
+  translate: 0;
+}
+
 .pill-tag {
   font-size: 12px;
   line-height: 24px;
@@ -979,8 +997,8 @@ button {
 .contact-form__input::placeholder {
   color: var(--color-text-faint);
 }
-.contact-form__input:focus {
-  outline: none;
+.contact-form__input:focus-visible {
+  outline: 2px solid transparent;
   background-color: var(--color-bg-card);
   border-color: var(--color-green);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 20%, transparent);

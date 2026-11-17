@@ -2,7 +2,7 @@
 /* 予備のテンプレート（トップは front-page.php、実績詳細は single-works.php が使われます） */
 get_header(); ?>
 
-<main class="section">
+<main class="section" id="main">
   <div class="container">
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
       <article class="page-content">

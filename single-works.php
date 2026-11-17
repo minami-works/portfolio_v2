@@ -29,7 +29,7 @@
   $prev  = $total > 1 ? $ids[($index - 1 + $total) % $total] : null;
   $next  = $total > 1 ? $ids[($index + 1) % $total] : null;
 ?>
-<main class="work-detail">
+<main class="work-detail" id="main">
   <!-- ========== 見出し ========== -->
   <section class="work-hero">
     <div class="container">
