@@ -81,7 +81,7 @@
         <!-- メイン画像はモックアップでも縦長キャプチャでもOK。16:10 の枠に上から合わせて表示 -->
         <figure class="work-hero__image">
           <button class="work-hero__zoom js-zoom" type="button" data-src="<?php echo esc_url($zoom_src); ?>" aria-label="<?php echo esc_attr($pc_screens ? 'PCでのページ全体を拡大して見る' : 'メイン画像を拡大して見る'); ?>">
-            <img class="work-hero__img" src="<?php echo esc_url(mw2_image_url($image)); ?>" alt="<?php echo esc_attr(get_the_title() . ' のメイン画像'); ?>">
+            <img class="work-hero__img" src="<?php echo esc_url(mw2_image_url($image)); ?>" alt="<?php echo esc_attr(get_the_title() . ' のメイン画像'); ?>" width="<?php echo esc_attr($image['width']); ?>" height="<?php echo esc_attr($image['height']); ?>">
           </button>
           <figcaption class="work-hero__caption"><?php echo esc_html($pc_screens ? 'クリックでページ全体を表示' : 'クリックで拡大'); ?></figcaption>
         </figure>
@@ -131,7 +131,7 @@
                 <!-- 枠の中をスクロールして、ページ全体を見られるようにする -->
                 <div class="screen-shot__frame">
                   <button class="screen-shot__button js-zoom" type="button" data-src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" aria-label="<?php echo esc_attr($screen['caption'] . ' を拡大'); ?>">
-                    <img class="screen-shot__img" src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" alt="<?php echo esc_attr(get_the_title() . ' PC ' . $screen['caption']); ?>" loading="lazy">
+                    <img class="screen-shot__img" src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" alt="<?php echo esc_attr(get_the_title() . ' PC ' . $screen['caption']); ?>" width="<?php echo esc_attr($screen['img']['width']); ?>" height="<?php echo esc_attr($screen['img']['height']); ?>" loading="lazy">
                   </button>
                 </div>
                 <?php if ($screen['caption']) : ?>
@@ -149,7 +149,7 @@
               <?php foreach ($sp_screens as $screen) : ?>
                 <figure class="phone-frame">
                   <button class="phone-frame__button js-zoom" type="button" data-src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" aria-label="<?php echo esc_attr($screen['caption'] . ' を拡大'); ?>">
-                    <img class="phone-frame__img" src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" alt="<?php echo esc_attr(get_the_title() . ' SP ' . $screen['caption']); ?>" loading="lazy">
+                    <img class="phone-frame__img" src="<?php echo esc_url(mw2_image_url($screen['img'])); ?>" alt="<?php echo esc_attr(get_the_title() . ' SP ' . $screen['caption']); ?>" width="<?php echo esc_attr($screen['img']['width']); ?>" height="<?php echo esc_attr($screen['img']['height']); ?>" loading="lazy">
                   </button>
                   <figcaption class="phone-frame__caption"><?php echo esc_html($screen['caption']); ?></figcaption>
                 </figure>

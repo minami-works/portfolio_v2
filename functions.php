@@ -85,8 +85,54 @@ function mw2_ogp() {
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
   <?php
+  // canonical：WordPressは投稿・固定ページにしか自動で出さないので、トップページだけここで出す
+  if (is_front_page() && !is_singular()) : ?>
+  <link rel="canonical" href="<?php echo esc_url(home_url('/')); ?>">
+  <?php endif;
+
+  // 構造化データ（JSON-LD）：トップページで「誰のどんなサイトか」を検索エンジンに伝える
+  if (is_front_page()) {
+    $json_ld = array(
+      '@context' => 'https://schema.org',
+      '@graph'   => array(
+        array(
+          '@type'       => 'WebSite',
+          'name'        => get_bloginfo('name'),
+          'url'         => home_url('/'),
+          'inLanguage'  => 'ja',
+          'description' => $default_description,
+        ),
+        array(
+          '@type'    => 'Person',
+          'name'     => 'Minami Gouda',
+          'jobTitle' => 'Webコーダー',
+          'url'      => home_url('/'),
+          'sameAs'   => array('https://github.com/minami-works', 'https://x.com/mnm_codes'),
+        ),
+      ),
+    );
+    echo '<script type="application/ld+json">' . wp_json_encode($json_ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+  }
 }
 add_action('wp_head', 'mw2_ogp', 5);
+
+/* ---------- ユーザー名（ログインIDのヒント）を外に出さない ----------
+   WordPressの初期設定では、次の2か所から誰でもユーザー名を見られてしまう
+   ① REST API（/wp-json/wp/v2/users）　② XMLサイトマップ（wp-sitemap-users-1.xml）
+   ※ ログイン中は管理画面（ブロックエディタ）が①を使うので、ログインしていない時だけ塞ぐ */
+function mw2_hide_users_endpoint($endpoints) {
+  if (!is_user_logged_in()) {
+    unset($endpoints['/wp/v2/users']);
+    unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+  }
+  return $endpoints;
+}
+add_filter('rest_endpoints', 'mw2_hide_users_endpoint');
+
+function mw2_remove_users_sitemap($provider, $name) {
+  return ('users' === $name) ? false : $provider;
+}
+add_filter('wp_sitemaps_add_provider', 'mw2_remove_users_sitemap', 10, 2);
 
 /* ---------- カスタム投稿タイプ：works ---------- */
 function mw2_register_works() {

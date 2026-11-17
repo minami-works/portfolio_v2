@@ -87,7 +87,7 @@
           </tr>
           <tr class="skills__row">
             <th class="skills__name" scope="row">レスポンシブ</th>
-            <td class="skills__note">スマホ表示の崩れを防ぐ設計、主要ブラウザでの表示確認</td>
+            <td class="skills__note">スマートフォン表示の崩れを防ぐ設計、主要ブラウザでの表示確認</td>
           </tr>
           <tr class="skills__row">
             <th class="skills__name" scope="row">ツール</th>
@@ -139,8 +139,9 @@
             $tech       = mw2_field('tech');
             $period     = mw2_field('period');
             $github_url = mw2_field('github_url');
+            $has_image  = $image || has_post_thumbnail(); // 画像がない実績は、空の枠を出さず本文だけのカードにする
           ?>
-            <li class="work-card js-work-card" data-tags="<?php echo esc_attr($slugs); ?>">
+            <li class="work-card js-work-card<?php echo $has_image ? '' : ' work-card--no-image'; ?>" data-tags="<?php echo esc_attr($slugs); ?>">
               <div class="work-card__body">
                 <h3 class="work-card__title"><?php the_title(); ?></h3>
                 <?php if (mw2_field('work_ja')) : ?>
@@ -172,6 +173,7 @@
                 </div>
               </div>
 
+              <?php if ($has_image) : ?>
               <a class="work-card__thumb" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
                 <?php if ($image) :
                   // 画像の縦横サイズ（読み込み前に場所を確保して、表示のガタつきを防ぐ）
@@ -183,6 +185,7 @@
                   <?php the_post_thumbnail('large', array('class' => 'work-card__img', 'alt' => '', 'loading' => 'lazy')); ?>
                 <?php endif; ?>
               </a>
+              <?php endif; ?>
             </li>
           <?php endwhile; wp_reset_postdata(); ?>
         </ul>
@@ -259,6 +262,9 @@
           <label class="contact-form__label" for="cf-message">ご相談内容</label>
           <textarea class="contact-form__input contact-form__input--textarea" id="cf-message" name="message" rows="5" autocomplete="off" placeholder="ご依頼内容・ご予算・納期など、わかる範囲でお書きください" required></textarea>
         </div>
+        <?php $privacy_url = get_privacy_policy_url() ? get_privacy_policy_url() : home_url('/privacy-policy/'); ?>
+        <!-- 入力途中の内容が消えないよう、プライバシーポリシーは別タブで開く -->
+        <p class="contact-form__note"><a class="text-link" href="<?php echo esc_url($privacy_url); ?>" target="_blank" rel="noopener">プライバシーポリシー</a>をご確認のうえ、同意いただける場合は送信してください。</p>
         <button class="button button--primary contact-form__submit" type="submit">送信する</button>
       </form>
     </div>

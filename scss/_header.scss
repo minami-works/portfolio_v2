@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: $header-height;
+    min-height: $header-height; // ナビが2段になった時にヘッダーごと伸びるよう、height ではなく min-height
     padding-inline: 24px;
 
     @include pc {
@@ -83,7 +83,8 @@
 
     @include pc {
       flex-direction: row;
-      gap: 32px;
+      flex-wrap: wrap; // 保険：項目が増えて入りきらない時は、文字の途中ではなく項目ごと2段目へ
+      gap: 0 32px;
     }
   }
 

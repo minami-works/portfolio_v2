@@ -79,7 +79,7 @@
   gap: 40px;
 
   @include pc {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: 64px;
     align-items: start;
   }
@@ -249,16 +249,26 @@
   gap: 24px;
   padding: 24px;
   background-color: var(--color-bg-card);
+  overflow-wrap: anywhere; // 管理画面から長い英単語・URLが入っても、カードの外にはみ出さず折り返す
   // SP：中の画像（角丸16px）と余白24pxをそろえて、外の角丸＝16 + 24 = 40px
   border-radius: $radius-m + 24px;
 
   @include pc {
-    grid-template-columns: 1fr 360px;
+    // 画像を360px固定にすると、タブレット幅（768px前後）で本文の列が185pxまで潰れるため、5:4の割合で分ける
+    // （minmax(0, …) ＝ 長い単語があっても列が押し広げられないように最小幅を0にする）
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
     gap: 48px;
     align-items: center;
     padding: 40px;
     // PC：画像は右側で余白も40pxあるので、別々の面として通常の大きな角丸に戻す
     border-radius: $radius-l;
+  }
+
+  // 画像がない実績：本文だけの1列にする（右側に空の列を残さない）
+  &--no-image {
+    @include pc {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   &[hidden] {
@@ -478,7 +488,7 @@
   gap: 40px;
 
   @include pc {
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: 64px;
     align-items: start;
   }
@@ -551,8 +561,17 @@
     }
   }
 
+  // 送信ボタン上の「プライバシーポリシーをご確認のうえ…」
+  &__note {
+    @include text(13px, 24px);
+    color: var(--color-text-sub);
+
+    .text-link {
+      font-size: inherit; // 文中のリンクなので、周りの文字と同じ大きさにする
+    }
+  }
+
   &__submit {
     justify-self: start;
-    margin-top: 8px;
   }
 }

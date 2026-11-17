@@ -27,7 +27,9 @@
 
   &__nav {
     display: flex;
-    gap: 24px;
+    flex-wrap: wrap; // スマホ幅で4項目が入りきらない時は、項目ごと2段目へ
+    justify-content: center;
+    gap: 0 24px;
   }
 
   &__link {

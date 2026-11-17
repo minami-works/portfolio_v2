@@ -311,7 +311,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  min-height: 64px;
   padding-inline: 24px;
 }
 @media (min-width: 761px) {
@@ -365,7 +365,8 @@ button {
 @media (min-width: 761px) {
   .header__list {
     flex-direction: row;
-    gap: 32px;
+    flex-wrap: wrap;
+    gap: 0 32px;
   }
 }
 .header__link {
@@ -507,7 +508,9 @@ button {
 }
 .footer__nav {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 24px;
 }
 .footer__link {
   font-size: 13px;
@@ -589,7 +592,7 @@ button {
 }
 @media (min-width: 761px) {
   .about {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: 64px;
     align-items: start;
   }
@@ -740,15 +743,21 @@ button {
   gap: 24px;
   padding: 24px;
   background-color: var(--color-bg-card);
+  overflow-wrap: anywhere;
   border-radius: 40px;
 }
 @media (min-width: 761px) {
   .work-card {
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
     gap: 48px;
     align-items: center;
     padding: 40px;
     border-radius: 24px;
+  }
+}
+@media (min-width: 761px) {
+  .work-card--no-image {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 .work-card[hidden] {
@@ -956,7 +965,7 @@ button {
 }
 @media (min-width: 761px) {
   .contact {
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: 64px;
     align-items: start;
   }
@@ -1023,9 +1032,20 @@ button {
   min-height: 176px;
   resize: vertical;
 }
+.contact-form__note {
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--color-text-sub);
+}
+.contact-form__note .text-link {
+  font-size: inherit;
+}
 .contact-form__submit {
   justify-self: start;
-  margin-top: 8px;
+}
+
+.work-detail {
+  overflow-wrap: anywhere;
 }
 
 .work-hero {
@@ -1123,7 +1143,7 @@ button {
 }
 @media (min-width: 761px) {
   .work-overview {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: 64px;
     align-items: start;
   }
