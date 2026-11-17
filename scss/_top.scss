@@ -217,7 +217,7 @@
     background-color: var(--color-bg-card);
     border: 1px solid var(--color-line);
     border-radius: 999px;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+    transition: color 0.15s ease-out, background-color 0.15s ease-out, border-color 0.15s ease-out;
 
     &.is-active {
       color: var(--color-on-green);
@@ -225,7 +225,7 @@
       border-color: var(--color-green);
     }
 
-    @media (any-hover: hover) {
+    @media (hover: hover) {
       &:not(.is-active):hover {
         border-color: var(--color-green-light);
       }
@@ -249,13 +249,16 @@
   gap: 24px;
   padding: 24px;
   background-color: var(--color-bg-card);
-  border-radius: $radius-l;
+  // SP：中の画像（角丸16px）と余白24pxをそろえて、外の角丸＝16 + 24 = 40px
+  border-radius: $radius-m + 24px;
 
   @include pc {
     grid-template-columns: 1fr 360px;
     gap: 48px;
     align-items: center;
     padding: 40px;
+    // PC：画像は右側で余白も40pxあるので、別々の面として通常の大きな角丸に戻す
+    border-radius: $radius-l;
   }
 
   &[hidden] {
@@ -305,6 +308,10 @@
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: top;
+    // 白っぽいスクショが背景に溶けないよう、内側に1pxの縁取り（色は黒/白の10%。緑などの色味は入れない）
+    border-radius: inherit; // 親の角丸に縁取りを沿わせる
+    outline: 1px solid var(--image-outline);
+    outline-offset: -1px;
   }
 }
 
@@ -523,7 +530,7 @@
     background-color: var(--color-bg);
     border: 1px solid var(--color-line-input);
     border-radius: $radius-s;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
 
     &::placeholder {
       color: var(--color-text-faint);

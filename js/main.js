@@ -41,7 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateLabel();
     themeToggle.addEventListener('click', () => {
+      // 切り替えの瞬間だけ全要素の transition を止める（色が一斉にバラバラ変わって、にじんで見えるのを防ぐ）
+      // ただし月⇔太陽アイコンのクロスフェードだけは動かしたいので除外する
+      const noTransition = document.createElement('style');
+      noTransition.textContent = '*:not(.theme-toggle__icon),*::before,*::after{transition:none !important}';
+      document.head.append(noTransition);
+
       const isDark = root.classList.toggle('is-dark');
+
+      void document.body.offsetHeight; // ここで新しい色を確定させる
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => noTransition.remove()); // 描画が終わってから元に戻す
+      });
       try {
         localStorage.setItem('mw2-theme', isDark ? 'dark' : 'light');
       } catch (e) {

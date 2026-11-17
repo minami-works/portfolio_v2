@@ -1,25 +1,29 @@
 // 動きはヒーローの読み込み時だけにしぼる（各セクションのフェードインはやめた）
+// 「動きを減らす」設定の人にはフェードだけ、それ以外の人には「下から少し浮き上がる＋ぼかしが取れる」動きを見せる
+// ※ 隠れた状態は from 側にだけ書く（アニメーションが動かない環境でも文字が消えたままにならない）
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+    transform: translateY(12px);
+    filter: blur(4px);
   }
 }
 
 .hero__inner > * {
-  animation: hero-in 0.8s ease both;
+  animation: hero-fade 0.3s ease-out both;
 
+  @media (prefers-reduced-motion: no-preference) {
+    animation-name: hero-in;
+  }
+
+  // 名前 → 見出し → リード → ステータス → ボタン の順に 0.1秒ずつずらす
   &:nth-child(2) { animation-delay: 0.1s; }
   &:nth-child(3) { animation-delay: 0.2s; }
   &:nth-child(n + 4) { animation-delay: 0.3s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__inner > * {
-    animation: none;
-  }
 }

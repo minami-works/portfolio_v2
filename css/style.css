@@ -17,6 +17,7 @@
   --color-on-green: #ffffff;
   --color-sub-bg: #e1e8de;
   --color-sub-text: #405446;
+  --image-outline: oklch(0 0 0 / 0.1);
 }
 
 .is-dark {
@@ -37,6 +38,7 @@
   --color-on-green: #ffffff;
   --color-sub-bg: #2e3730;
   --color-sub-text: #c9d6cc;
+  --image-outline: oklch(1 0 0 / 0.1);
   color-scheme: dark;
 }
 
@@ -185,7 +187,13 @@ button {
   font-weight: 500;
   border: 1px solid transparent;
   border-radius: 999px;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease-out, border-color 0.15s ease-out, color 0.15s ease-out, scale 0.15s ease-out;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button:not(:disabled):active {
+    scale: 0.96;
+  }
 }
 .button--small {
   font-size: 14px;
@@ -197,7 +205,7 @@ button {
   color: var(--color-on-green);
   background-color: var(--color-green);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .button--primary:hover {
     background-color: color-mix(in srgb, var(--color-green) 85%, black);
   }
@@ -207,7 +215,7 @@ button {
   background-color: transparent;
   border-color: var(--color-line-strong);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .button--outline:hover {
     border-color: var(--color-green);
     color: var(--color-green-text);
@@ -230,14 +238,14 @@ button {
   text-decoration: underline;
   text-decoration-color: var(--color-line-strong);
   text-underline-offset: 6px;
-  transition: color 0.2s, text-decoration-color 0.2s;
+  transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
 }
 .text-link--primary {
   font-weight: 500;
   color: var(--color-green-text);
   text-decoration-color: var(--color-green-light);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .text-link:hover {
     color: var(--color-green-text);
     text-decoration-color: currentColor;
@@ -292,6 +300,7 @@ button {
   height: calc(100vh - 64px);
   height: calc(100dvh - 64px);
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 32px 24px;
   background-color: var(--color-bg);
   visibility: hidden;
@@ -332,7 +341,7 @@ button {
   padding-block: 16px;
   color: var(--color-text-sub);
   border-bottom: 1px solid var(--color-line);
-  transition: color 0.2s;
+  transition: color 0.15s ease-out;
 }
 @media (min-width: 761px) {
   .header__link {
@@ -342,7 +351,7 @@ button {
     border-bottom: none;
   }
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .header__link:hover {
     color: var(--color-green-text);
   }
@@ -362,26 +371,34 @@ button {
   background: none;
   border: none;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s ease-out;
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .theme-toggle:hover {
     background-color: var(--color-bg-gray);
   }
 }
 .theme-toggle__icon {
+  grid-area: 1/1;
   width: 18px;
   height: 18px;
   fill: var(--color-text-sub);
+  transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
-.theme-toggle__icon--sun {
-  display: none;
+@media (prefers-reduced-motion: no-preference) {
+  .theme-toggle__icon {
+    transition-property: opacity, scale, filter;
+  }
 }
-.is-dark .theme-toggle__icon--moon {
-  display: none;
+.theme-toggle__icon--sun, .is-dark .theme-toggle__icon--moon {
+  opacity: 0;
+  scale: 0.25;
+  filter: blur(4px);
 }
 .is-dark .theme-toggle__icon--sun {
-  display: block;
+  opacity: 1;
+  scale: 1;
+  filter: blur(0);
 }
 
 .hamburger {
@@ -404,7 +421,12 @@ button {
   height: 2px;
   background-color: var(--color-text);
   border-radius: 1px;
-  transition: transform 0.25s, opacity 0.25s;
+  transition: opacity 0.25s;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hamburger__line {
+    transition: transform 0.25s, opacity 0.25s;
+  }
 }
 .hamburger__line:nth-child(1) {
   top: 13px;
@@ -458,7 +480,7 @@ button {
   line-height: 24px;
   color: var(--color-sub-text);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .footer__link:hover {
     color: var(--color-green-text);
   }
@@ -657,14 +679,14 @@ button {
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-line);
   border-radius: 999px;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: color 0.15s ease-out, background-color 0.15s ease-out, border-color 0.15s ease-out;
 }
 .works-filter__button.is-active {
   color: var(--color-on-green);
   background-color: var(--color-green);
   border-color: var(--color-green);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .works-filter__button:not(.is-active):hover {
     border-color: var(--color-green-light);
   }
@@ -684,7 +706,7 @@ button {
   gap: 24px;
   padding: 24px;
   background-color: var(--color-bg-card);
-  border-radius: 24px;
+  border-radius: 40px;
 }
 @media (min-width: 761px) {
   .work-card {
@@ -692,6 +714,7 @@ button {
     gap: 48px;
     align-items: center;
     padding: 40px;
+    border-radius: 24px;
   }
 }
 .work-card[hidden] {
@@ -737,6 +760,9 @@ button {
   aspect-ratio: 16/10;
   object-fit: cover;
   object-position: top;
+  border-radius: inherit;
+  outline: 1px solid var(--image-outline);
+  outline-offset: -1px;
 }
 
 .work-meta {
@@ -948,7 +974,7 @@ button {
   background-color: var(--color-bg);
   border: 1px solid var(--color-line-input);
   border-radius: 8px;
-  transition: border-color 0.2s, background-color 0.2s;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
 }
 .contact-form__input::placeholder {
   color: var(--color-text-faint);
@@ -987,7 +1013,7 @@ button {
   content: "‹";
   margin-right: 8px;
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .work-hero__back:hover {
     color: var(--color-green-text);
   }
@@ -1275,12 +1301,12 @@ button {
   background-color: var(--color-bg-card);
   border: 1px solid transparent;
   border-radius: 16px;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s ease-out;
 }
 .pager__card--next {
   text-align: right;
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .pager__card:hover {
     border-color: var(--color-green-light);
   }
@@ -1317,18 +1343,25 @@ button {
   margin-top: 24px;
 }
 
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+    transform: translateY(12px);
+    filter: blur(4px);
   }
 }
 .hero__inner > * {
-  animation: hero-in 0.8s ease both;
+  animation: hero-fade 0.3s ease-out both;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__inner > * {
+    animation-name: hero-in;
+  }
 }
 .hero__inner > *:nth-child(2) {
   animation-delay: 0.1s;
@@ -1338,10 +1371,4 @@ button {
 }
 .hero__inner > *:nth-child(n+4) {
   animation-delay: 0.3s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__inner > * {
-    animation: none;
-  }
 }

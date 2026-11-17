@@ -52,6 +52,7 @@
     height: calc(100vh - #{$header-height});
     height: calc(100dvh - #{$header-height});
     overflow-y: auto;
+    overscroll-behavior: contain; // メニューを端までスクロールしても、後ろのページを動かさない
     padding: 32px 24px;
     background-color: var(--color-bg);
     visibility: hidden;
@@ -92,7 +93,7 @@
     padding-block: 16px;
     color: var(--color-text-sub);
     border-bottom: 1px solid var(--color-line);
-    transition: color 0.2s;
+    transition: color 0.15s ease-out;
 
     @include pc {
       @include text(14px, 24px);
@@ -100,7 +101,7 @@
       border-bottom: none;
     }
 
-    @media (any-hover: hover) {
+    @media (hover: hover) {
       &:hover {
         color: var(--color-green-text);
       }
@@ -124,29 +125,41 @@
   background: none;
   border: none;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s ease-out;
 
-  @media (any-hover: hover) {
+  @media (hover: hover) {
     &:hover {
       background-color: var(--color-bg-gray);
     }
   }
 
+  // 月と太陽を同じマスに重ねて置き、入れ替わる時にクロスフェードさせる
+  // （ダークモード切り替え時に transition を止める main.js の処理からは、このアイコンだけ除外している）
   &__icon {
+    grid-area: 1 / 1;
     width: 18px;
     height: 18px;
     fill: var(--color-text-sub);
+    transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
 
-    &--sun {
-      display: none;
+    // 縮む・ぼける動きは「動きを減らす」設定をしていない人だけ（設定している人はフェードのみ）
+    @media (prefers-reduced-motion: no-preference) {
+      transition-property: opacity, scale, filter;
     }
 
+    // 隠れている方：小さく・透明・ぼかし
+    &--sun,
     .is-dark &--moon {
-      display: none;
+      opacity: 0;
+      scale: 0.25;
+      filter: blur(4px);
     }
 
+    // 表示する方
     .is-dark &--sun {
-      display: block;
+      opacity: 1;
+      scale: 1;
+      filter: blur(0);
     }
   }
 }
@@ -171,7 +184,12 @@
     height: 2px;
     background-color: var(--color-text);
     border-radius: 1px;
-    transition: transform 0.25s, opacity 0.25s;
+    // 「動きを減らす」設定の人には回転を見せず、× にパッと切り替える（真ん中の線のフェードだけ残す）
+    transition: opacity 0.25s;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.25s, opacity 0.25s;
+    }
 
     &:nth-child(1) { top: 13px; }
     &:nth-child(2) { top: 19px; }

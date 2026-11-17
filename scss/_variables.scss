@@ -49,6 +49,8 @@ $radius-l: 24px;   // 大きな面（お問い合わせの枠など）
   // サブカラー（タグ・フッター）
   --color-sub-bg: #e1e8de;
   --color-sub-text: #405446;
+  // 画像の縁取り（純粋な黒の10%）
+  --image-outline: oklch(0 0 0 / 0.1);
 }
 
 // ダークモード（<html class="is-dark">）：夜の森をイメージ
@@ -70,6 +72,7 @@ $radius-l: 24px;   // 大きな面（お問い合わせの枠など）
   --color-on-green: #ffffff;
   --color-sub-bg: #2e3730;
   --color-sub-text: #c9d6cc;
+  --image-outline: oklch(1 0 0 / 0.1); // 画像の縁取り（純粋な白の10%）
 
   color-scheme: dark;
 }

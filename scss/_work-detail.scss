@@ -24,7 +24,7 @@
       margin-right: 8px;
     }
 
-    @media (any-hover: hover) {
+    @media (hover: hover) {
       &:hover {
         color: var(--color-green-text);
       }
@@ -339,13 +339,13 @@
     background-color: var(--color-bg-card);
     border: 1px solid transparent;
     border-radius: $radius-m;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s ease-out;
 
     &--next {
       text-align: right;
     }
 
-    @media (any-hover: hover) {
+    @media (hover: hover) {
       &:hover {
         border-color: var(--color-green-light);
       }
