@@ -53,6 +53,27 @@ function mw2_theme_mode_script() {
 }
 add_action('wp_head', 'mw2_theme_mode_script', 1);
 
+/* ---------- Google アナリティクス（GA4） ----------
+   前のテーマの header.php に直接書いていたタグを、テーマを替えても消えないよう functions.php から出す。
+   次の場合は計測しない（数字に混ざらないように）：
+   ・ローカル環境（Local では wp-config.php で WP_ENVIRONMENT_TYPE が 'local'。本番は 'production'）
+   ・ログイン中（自分で確認のために開いたアクセス） */
+function mw2_google_analytics() {
+  if ('production' !== wp_get_environment_type() || is_user_logged_in()) return;
+  $ga_id = 'G-3H94STZJ3V';
+  ?>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr($ga_id); ?>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<?php echo esc_js($ga_id); ?>');
+  </script>
+  <?php
+}
+add_action('wp_head', 'mw2_google_analytics', 1);
+
 /* ---------- meta description と OGP（SNSでシェアされたときの表示） ----------
    ※ SEOプラグイン（Yoast・SEO SIMPLE PACK など）を入れる場合は、
      同じタグが二重に出るので、この関数の add_action を消してください */
