@@ -211,6 +211,33 @@
   }
 }
 
+// タブレット：スマホ画面と同じ灰色の箱に入れ、実際の幅に近い細めの枠で中央に置く
+.tablet-screen {
+  margin-top: 40px;
+  padding: 24px;
+  background-color: var(--color-bg-gray);
+  border-radius: $radius-l;
+
+  @include pc {
+    padding: 32px 40px 40px;
+  }
+
+  &__label {
+    @include text(15px, 24px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+}
+
+.screen-shot--tablet {
+  max-width: 480px;
+  margin-inline: auto;
+
+  .screen-shot__caption {
+    text-align: center;
+  }
+}
+
 .sp-screens {
   margin-top: 40px;
   padding: 24px;

@@ -22,6 +22,9 @@
     if ($img = mw2_field('screen_pc_' . $n)) $pc_screens[] = array('img' => $img, 'caption' => mw2_field('screen_pc_' . $n . '_caption'));
     if ($img = mw2_field('screen_sp_' . $n)) $sp_screens[] = array('img' => $img, 'caption' => mw2_field('screen_sp_' . $n . '_caption'));
   }
+  $tablet         = mw2_field('screen_tablet');
+  $tablet_caption = mw2_field('screen_tablet_caption');
+  $has_screens    = $pc_screens || $tablet || $sp_screens;
 
   // 前後の作品（最初と最後はループさせる）
   $ids   = mw2_work_ids();
@@ -114,13 +117,13 @@
   <?php endif; ?>
 
   <!-- ========== 画面 ========== -->
-  <?php if ($pc_screens || $sp_screens) : ?>
+  <?php if ($has_screens) : ?>
     <section class="section">
       <div class="container">
         <div class="section__head section__head--split">
           <div>
             <h2 class="section__title">画面</h2>
-            <p class="section__lead">PCとスマートフォンでの表示を、実際の画面で掲載しています。</p>
+            <p class="section__lead"><?php echo esc_html($tablet ? 'PC・タブレット・スマートフォン' : 'PCとスマートフォン'); ?>での表示を、実際の画面で掲載しています。</p>
           </div>
           <p class="screens__hint">画像をクリックすると拡大できます</p>
         </div>
@@ -140,6 +143,23 @@
                 <?php endif; ?>
               </figure>
             <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+
+        <?php if ($tablet) : ?>
+          <!-- タブレットは実際の幅に近い細めの枠で見せ、PCとの違いが分かるようにする -->
+          <div class="tablet-screen">
+            <h3 class="tablet-screen__label">タブレット</h3>
+            <figure class="screen-shot screen-shot--tablet">
+              <div class="screen-shot__frame">
+                <button class="screen-shot__button js-zoom" type="button" data-src="<?php echo esc_url(mw2_image_url($tablet)); ?>" aria-label="<?php echo esc_attr(($tablet_caption ? $tablet_caption : 'タブレット画面') . ' を拡大'); ?>">
+                  <img class="screen-shot__img" src="<?php echo esc_url(mw2_image_url($tablet)); ?>" alt="<?php echo esc_attr(get_the_title() . ' タブレット ' . $tablet_caption); ?>" width="<?php echo esc_attr($tablet['width']); ?>" height="<?php echo esc_attr($tablet['height']); ?>" loading="lazy">
+                </button>
+              </div>
+              <?php if ($tablet_caption) : ?>
+                <figcaption class="screen-shot__caption"><?php echo esc_html($tablet_caption); ?></figcaption>
+              <?php endif; ?>
+            </figure>
           </div>
         <?php endif; ?>
 
@@ -163,7 +183,7 @@
   <?php endif; ?>
 
   <!-- 拡大表示（メイン画像・画面キャプチャ・改善提案のどれかがあるときだけ） -->
-  <?php if ($image || $pc_screens || $sp_screens || $proposal) : ?>
+  <?php if ($image || $has_screens || $proposal) : ?>
     <dialog class="lightbox js-lightbox" aria-label="拡大画像">
       <button class="lightbox__close js-lightbox-close" type="button" aria-label="閉じる">×</button>
       <img class="lightbox__img" src="" alt="">
@@ -189,7 +209,7 @@
   <!-- ========== 改善提案（画像が入っているときだけ） ========== -->
   <?php if ($proposal) :
     $proposal_title = mw2_field('proposal_title');
-    $proposal_text  = mw2_field('proposal_text');
+    $proposal_text  = trim((string) mw2_field('proposal_text')); // 末尾の改行で余分な <br> が付かないように
   ?>
     <section class="section">
       <div class="container">
