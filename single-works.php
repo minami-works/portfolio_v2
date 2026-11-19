@@ -13,6 +13,7 @@
   $note       = mw2_field('overview_note');
   $scope      = mw2_lines(mw2_field('scope'));
   $points     = mw2_lines(mw2_field('points'));
+  $proposal   = mw2_field('proposal_image');
 
   // 画面キャプチャ（画像が入っている枠だけ使う）
   $pc_screens = array();
@@ -161,8 +162,8 @@
     </section>
   <?php endif; ?>
 
-  <!-- 拡大表示（メイン画像・画面キャプチャのどれかがあるときだけ） -->
-  <?php if ($image || $pc_screens || $sp_screens) : ?>
+  <!-- 拡大表示（メイン画像・画面キャプチャ・改善提案のどれかがあるときだけ） -->
+  <?php if ($image || $pc_screens || $sp_screens || $proposal) : ?>
     <dialog class="lightbox js-lightbox" aria-label="拡大画像">
       <button class="lightbox__close js-lightbox-close" type="button" aria-label="閉じる">×</button>
       <img class="lightbox__img" src="" alt="">
@@ -181,6 +182,29 @@
             <li class="notes__item"><?php echo esc_html($point); ?></li>
           <?php endforeach; ?>
         </ul>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <!-- ========== 改善提案（画像が入っているときだけ） ========== -->
+  <?php if ($proposal) :
+    $proposal_title = mw2_field('proposal_title');
+    $proposal_text  = mw2_field('proposal_text');
+  ?>
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">改善提案</h2>
+          <?php if ($proposal_title) : ?><p class="section__lead"><?php echo esc_html($proposal_title); ?></p><?php endif; ?>
+        </div>
+        <figure class="proposal">
+          <button class="proposal__button js-zoom" type="button" data-src="<?php echo esc_url(mw2_image_url($proposal)); ?>" aria-label="改善提案の画像を拡大">
+            <img class="proposal__img" src="<?php echo esc_url(mw2_image_url($proposal)); ?>" alt="<?php echo esc_attr(get_the_title() . ' 改善提案' . ($proposal_title ? '：' . $proposal_title : '')); ?>" width="<?php echo esc_attr($proposal['width']); ?>" height="<?php echo esc_attr($proposal['height']); ?>" loading="lazy">
+          </button>
+          <?php if ($proposal_text) : ?>
+            <figcaption class="proposal__text"><?php echo nl2br(esc_html($proposal_text)); ?></figcaption>
+          <?php endif; ?>
+        </figure>
       </div>
     </section>
   <?php endif; ?>

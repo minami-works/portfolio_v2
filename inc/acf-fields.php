@@ -61,5 +61,10 @@ acf_add_local_field_group(array(
     mw2_acf_text('field_mw2_screen_sp_1_caption', 'screen_sp_1_caption', 'SP画面 1 の名前'),
     mw2_acf_image('field_mw2_screen_sp_2', 'screen_sp_2', 'SP画面 2'),
     mw2_acf_text('field_mw2_screen_sp_2_caption', 'screen_sp_2_caption', 'SP画面 2 の名前'),
+
+    array('key' => 'tab_mw2_proposal', 'label' => '改善提案', 'type' => 'tab'),
+    mw2_acf_image('field_mw2_proposal_image', 'proposal_image', '改善提案の画像', '空欄なら「改善提案」の欄ごと非表示。比較画像（横長）推奨'),
+    mw2_acf_text('field_mw2_proposal_title', 'proposal_title', '改善提案の見出し', '例：メニュー展開時の文字色'),
+    mw2_acf_text('field_mw2_proposal_text', 'proposal_text', '改善提案の説明', '提案した理由や、実装との違いなど', 'textarea'),
   ),
 ));
