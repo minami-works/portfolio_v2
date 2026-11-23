@@ -28,6 +28,15 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s, color 0.2s;
+  // 中身が短いページ（404など）でも、フッターを画面の一番下に置く
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+// 本文エリアが余った高さを埋め、フッターを下へ押し下げる
+main {
+  flex-grow: 1;
 }
 
 h1, h2, h3, p, ul, ol, dl, dd, figure {
@@ -37,6 +46,18 @@ h1, h2, h3, p, ul, ol, dl, dd, figure {
 // 見出しを文節で改行する（「コーディ／ング」のような変な折り返しを防ぐ）
 h1, h2, h3 {
   word-break: auto-phrase;
+}
+
+// 本文も文節で改行し（「ご返信し／ます」を防ぐ）、最終行に1〜2文字だけ残る「泣き別れ」も避ける
+// ※ 対応していないブラウザ（Safari・Firefox）では、これまでどおりの改行になるだけ
+p, dd, li {
+  word-break: auto-phrase;
+  text-wrap: pretty;
+}
+
+// 文節の判定が外れて単語の途中で折り返す所（例：「デザイン方／向」）だけ、ひとかたまりにする
+.nowrap {
+  white-space: nowrap;
 }
 
 ul, ol {

@@ -14,9 +14,9 @@
   $home = is_front_page() ? '' : home_url('/');
   // アンカー（id） => 表示名
   $nav  = array(
+    'works'   => '制作実績',
     'about'   => 'わたしについて',
     'skills'  => 'できること',
-    'works'   => '制作実績',
     'pricing' => '料金',
     'contact' => 'お問い合わせ',
   );

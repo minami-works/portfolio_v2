@@ -27,6 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 32px; // ロゴとメニューが狭い幅でくっつかないよう、最低でもこの間隔をあける
     min-height: $header-height; // ナビが2段になった時にヘッダーごと伸びるよう、height ではなく min-height
     padding-inline: 24px;
 
@@ -36,6 +37,8 @@
   }
 
   &__logo {
+    flex-shrink: 0; // 幅が足りなくてもロゴは縮めず、改行もさせない
+    white-space: nowrap;
     @include text(17px, 24px);
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -69,8 +72,7 @@
       height: auto;
       overflow: visible;
       padding: 0;
-      margin-left: auto;
-      margin-right: 24px;
+      margin-left: auto; // 右のボタンとの間は、ヘッダーの gap（32px）であける
       background: none;
       visibility: visible;
       opacity: 1;
@@ -84,7 +86,11 @@
     @include pc {
       flex-direction: row;
       flex-wrap: wrap; // 保険：項目が増えて入りきらない時は、文字の途中ではなく項目ごと2段目へ
-      gap: 0 32px;
+      gap: 0 20px; // タブレット幅（761〜1023px）は項目の間を少し詰めて1行に収める
+
+      @media (min-width: 1024px) {
+        gap: 0 32px;
+      }
     }
   }
 

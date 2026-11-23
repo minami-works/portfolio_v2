@@ -59,25 +59,17 @@
     margin-top: 16px;
   }
 
+  // メイン画像：灰色の角丸パネルには入れず、透過のモックアップを幅いっぱいに大きく見せる（トップの実績カードと同じ見せ方）
   &__image {
-    margin-top: 40px;
-    padding: 16px;
-    background-color: var(--color-bg-gray);
-    border-radius: $radius-l;
-
-    @include pc {
-      padding: 32px 40px; // モックアップは画像の中に余白があるので、枠側の余白は控えめに
-    }
+    margin-top: 48px;
   }
 
   &__zoom {
     display: block;
     width: 100%;
     padding: 0;
-    overflow: hidden;
     background: none;
     border: none;
-    border-radius: $radius-s;
     cursor: zoom-in;
   }
 
@@ -87,13 +79,21 @@
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: top;
+    transition: transform 0.3s ease-out;
+  }
+
+  // ホバーで少しだけ近づく（拡大できる合図。トップの作品と同じ動き）
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &__zoom:hover &__img {
+      transform: scale(1.02);
+    }
   }
 
   &__caption {
     @include text(13px, 24px);
     margin-top: 8px;
     text-align: center;
-    color: var(--color-text-muted);
+    color: var(--color-text-sub); // 灰色の箱の上でも 4.5:1 以上
   }
 
   &__links {
@@ -123,42 +123,27 @@
   &__note {
     @include text(14px, 24px);
     margin-top: 16px;
-    color: var(--color-text-muted);
+    color: var(--color-text-sub); // 灰色の背景の上でも 4.5:1 以上
   }
 }
 
+// 担当範囲：白いカード＋緑の点の箇条書きはやめ、料金欄と同じ「線で区切る一覧」にする
 .scope {
-  padding: 24px;
-  background-color: var(--color-bg-card);
-  border-radius: $radius-m;
-
   &__title {
     @include text(16px, 32px);
     font-weight: 700;
   }
 
   &__list {
-    display: grid;
-    gap: 8px;
-    margin-top: 8px;
+    margin-top: 16px;
+    border-bottom: 1px solid var(--color-line-strong);
   }
 
   &__item {
     @include text(14px, 24px);
-    position: relative; // ::before の基準
-    padding-left: 16px;
-    color: var(--color-text-sub);
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 9px; // 行間24pxの真ん中（12px）− 丸の半径
-      left: 0;
-      width: 6px;
-      height: 6px;
-      background-color: var(--color-green-light);
-      border-radius: 50%;
-    }
+    padding-block: 16px;
+    color: var(--color-text);
+    border-top: 1px solid var(--color-line-strong);
   }
 }
 
@@ -207,20 +192,16 @@
   &__caption {
     @include text(13px, 24px);
     margin-top: 8px;
-    color: var(--color-text-muted);
+    color: var(--color-text-sub); // 灰色の箱の上でも 4.5:1 以上
   }
 }
 
-// タブレット：スマホ画面と同じ灰色の箱に入れ、実際の幅に近い細めの枠で中央に置く
+// タブレット・スマートフォン：灰色の箱には入れず、上の線と小見出しで区切る
+// （端末の枠そのものが画面の輪郭になるので、外側の箱はいらない）
 .tablet-screen {
-  margin-top: 40px;
-  padding: 24px;
-  background-color: var(--color-bg-gray);
-  border-radius: $radius-l;
-
-  @include pc {
-    padding: 32px 40px 40px;
-  }
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-line);
 
   &__label {
     @include text(15px, 24px);
@@ -239,14 +220,9 @@
 }
 
 .sp-screens {
-  margin-top: 40px;
-  padding: 24px;
-  background-color: var(--color-bg-gray);
-  border-radius: $radius-l;
-
-  @include pc {
-    padding: 32px 40px 40px;
-  }
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-line);
 
   &__label {
     @include text(15px, 24px);
@@ -293,7 +269,7 @@
     margin-top: 8px;
     text-align: center;
     word-break: auto-phrase; // 「トップページ（全 / 体）」のような途中改行を防ぐ
-    color: var(--color-text-muted);
+    color: var(--color-text-sub); // 灰色の箱の上でも 4.5:1 以上
   }
 }
 
@@ -335,17 +311,16 @@
 
 // ---------- 工夫した点 ----------
 // 順番に意味はないので番号は付けない。
-// 項目数が奇数でも片側が空かないよう、1列で読みやすい幅に並べる
+// 同じ大きさの灰色の箱を縦に積むとテンプレっぽく見えるので、箱はやめて上下の線で区切る
+// 1列で読みやすい幅（800px）に並べる
 .notes {
-  display: grid;
-  gap: 16px;
   max-width: 800px;
+  border-bottom: 1px solid var(--color-line);
 
   &__item {
     @include text(15px, 32px);
-    padding: 24px 32px;
-    background-color: var(--color-bg-gray);
-    border-radius: $radius-m;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-line);
   }
 }
 
@@ -388,7 +363,7 @@
   &__head {
     @include text(14px, 24px);
     margin-bottom: 16px;
-    color: var(--color-text-muted);
+    color: var(--color-text-sub); // 灰色の背景の上でも 4.5:1 以上
   }
 
   &__card {
@@ -444,6 +419,9 @@
 
 // 404・予備テンプレート
 .page-content {
+  // 本文中の長いURL（プライバシーポリシーなど）がスマホで画面からはみ出さないよう、途中で折り返す
+  overflow-wrap: anywhere;
+
   > * + * {
     margin-top: 24px;
   }

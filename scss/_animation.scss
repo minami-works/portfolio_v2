@@ -15,15 +15,24 @@
   }
 }
 
-.hero__inner > * {
+.hero__text > *,
+.hero__work {
   animation: hero-fade 0.3s ease-out both;
 
   @media (prefers-reduced-motion: no-preference) {
     animation-name: hero-in;
   }
+}
 
-  // 名前 → 見出し → リード → ステータス → ボタン の順に 0.1秒ずつずらす
+// 名前 → 見出し → リード → ボタン・受付状況 の順に 0.1秒ずつずらす
+.hero__text > * {
   &:nth-child(2) { animation-delay: 0.1s; }
   &:nth-child(3) { animation-delay: 0.2s; }
   &:nth-child(n + 4) { animation-delay: 0.3s; }
+}
+
+// 代表作は文字が出そろってから、少しゆっくり現れる
+.hero__work {
+  animation-duration: 0.6s;
+  animation-delay: 0.4s;
 }

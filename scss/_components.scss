@@ -81,13 +81,14 @@
   }
 }
 
-// ---------- 丸いタグ（works） ----------
+// ---------- タグ（works） ----------
+// 丸い形は押せるもの（ボタン・絞り込み）だけに使い、押せないラベルは小さな角丸にして見分けられるようにする
 .pill-tag {
   @include text(12px, 24px);
-  padding-inline: 12px;
+  padding-inline: 8px;
   color: var(--color-sub-text);
   background-color: var(--color-sub-bg);
-  border-radius: 999px;
+  border-radius: 4px;
 }
 
 // ---------- テキストリンク ----------

@@ -47,29 +47,72 @@
     color: var(--color-text-sub);
   }
 
-  // ● ただいまご依頼を受け付けています
-  &__status {
-    @include text(14px, 24px);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 32px;
-    color: var(--color-green-text);
-
-    &::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background-color: var(--color-green);
-      border-radius: 50%;
-    }
-  }
-
   &__buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    margin-top: 24px;
+    margin-top: 40px;
+  }
+
+  // 受付状況：テンプレっぽい緑の点バッジはやめ、ボタンの下に静かな一文として置く
+  &__status {
+    @include text(14px, 24px);
+    margin-top: 16px;
+    color: var(--color-text-sub);
+  }
+
+  // 代表作があるとき：PC（1024px〜）は左に文字、右に作品を半分ずつ
+  // （左右の端は他のセクションと同じ container の線にそろえる）
+  &__inner--with-work {
+    display: grid;
+    gap: 56px;
+
+    @media (min-width: 1024px) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+  }
+
+  // 半分の幅でも見出しが2行に収まるよう、少しだけ小さくする
+  &__inner--with-work &__title {
+    @media (min-width: 1024px) {
+      @include text(48px, 80px);
+    }
+  }
+
+  // 代表作：枠やカードで囲まず、透過のモックアップをそのまま見せる
+  &__work {
+    display: block;
+    max-width: 560px;
+    margin-inline: auto; // 縦積みのときは中央に置き、左右の余白をそろえる
+
+    @media (min-width: 1024px) {
+      max-width: none;
+    }
+  }
+
+  &__work-img {
+    width: 100%;
+    transition: transform 0.3s ease-out;
+  }
+
+  // ホバーで作品が少しだけ近づく（リンクだと分かる合図）
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &__work:hover &__work-img {
+      transform: scale(1.02);
+    }
+  }
+}
+
+// PC：ヒーローだけで最初の画面を埋め、次のセクションの色がのぞかないようにする（64px＝ヘッダーの高さ）
+// 中身は上下中央に置くので、上下の余白は 96px に減らして 1024×768 でも1画面に収める
+@include pc {
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: calc(100svh - 64px);
+    padding-block: 96px;
   }
 }
 
@@ -147,18 +190,6 @@
   &__fact-value {
     @include text(14px, 24px);
     color: var(--color-text);
-
-    // ● ご依頼受付中
-    &--status::before {
-      content: "";
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      margin-right: 8px;
-      vertical-align: 1px;
-      background-color: var(--color-green);
-      border-radius: 50%;
-    }
   }
 }
 
@@ -172,7 +203,8 @@
     @include text(13px, 24px);
     padding-bottom: 8px;
     font-weight: 400;
-    color: var(--color-text-muted);
+    // グレー背景の上なので、muted（4.2:1）ではなく sub で読みやすさ 4.5:1 以上を確保
+    color: var(--color-text-sub);
     border-bottom: 1px solid var(--color-line-strong);
   }
 
@@ -250,8 +282,7 @@
   padding: 24px;
   background-color: var(--color-bg-card);
   overflow-wrap: anywhere; // 管理画面から長い英単語・URLが入っても、カードの外にはみ出さず折り返す
-  // SP：中の画像（角丸16px）と余白24pxをそろえて、外の角丸＝16 + 24 = 40px
-  border-radius: $radius-m + 24px;
+  border-radius: $radius-l;
 
   @include pc {
     // 画像を360px固定にすると、タブレット幅（768px前後）で本文の列が185pxまで潰れるため、5:4の割合で分ける
@@ -260,8 +291,11 @@
     gap: 48px;
     align-items: center;
     padding: 40px;
-    // PC：画像は右側で余白も40pxあるので、別々の面として通常の大きな角丸に戻す
-    border-radius: $radius-l;
+  }
+
+  // 広いPC：本文の列に余裕があるので、作品の画像を主役にして大きく見せる（本文2：画像3）
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   // 画像がない実績：本文だけの1列にする（右側に空の列を残さない）
@@ -301,12 +335,10 @@
   }
 
   // SPでは画像を上に
+  // カードの中にさらに灰色の角丸の箱を入れると「箱の中の箱」になるので、透過のモックアップをカードに直接置く
   &__thumb {
     order: -1;
     display: block;
-    overflow: hidden;
-    background-color: var(--color-bg-gray);
-    border-radius: $radius-m;
 
     @include pc {
       order: 0;
@@ -318,10 +350,14 @@
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: top;
-    // 白っぽいスクショが背景に溶けないよう、内側に1pxの縁取り（色は黒/白の10%。緑などの色味は入れない）
-    border-radius: inherit; // 親の角丸に縁取りを沿わせる
-    outline: 1px solid var(--image-outline);
-    outline-offset: -1px;
+    transition: transform 0.3s ease-out;
+  }
+
+  // ホバーで作品が少しだけ近づく（ヒーローの代表作と同じ動き）
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &__thumb:hover &__img {
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -421,20 +457,20 @@
 
   &__notes {
     display: grid;
-    gap: 16px;
+    gap: 32px;
     margin-top: 40px;
 
     @include pc {
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 48px; // 2列の文章がくっついて見えないよう、列の間を広めに
     }
   }
 }
 
+// 注意書き：色付きの角丸の箱はやめ、上の線だけで区切る（料金表と同じ書き方）
 .note-box {
-  padding: 24px;
-  background-color: var(--color-bg-gray);
-  border-radius: $radius-m;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
 
   &__title {
     @include text(16px, 32px);
@@ -445,36 +481,44 @@
     @include text(14px, 32px);
     margin-top: 8px;
     color: var(--color-text-sub);
+
+    // 1文ずつ段落に分け、文と文の間に少し余白をとる
+    & + & {
+      margin-top: 16px;
+    }
   }
 }
 
+// 相談への誘導：緑の帯の箱はやめ、上の線で区切ったまとめの一段にする
+// 太字の一文（要点）＋ 細い一文（詳しく）の2段で、文の途中で折り返さないようにする
 .cta {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 24px;
-  margin-top: 40px;
-  padding: 32px 24px;
-  background-color: var(--color-sub-bg);
-  border-radius: $radius-l;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-line-strong);
 
   @include pc {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding: 40px 48px;
-  }
-
-  &__title {
-    @include text(20px, 32px);
-    font-weight: 700;
-    color: var(--color-sub-text);
   }
 
   &__text {
     @include text(14px, 24px);
-    margin-top: 8px;
     color: var(--color-text-sub);
+    word-break: auto-phrase; // 折り返すときは「お聞／かせ」のような単語の途中ではなく、文節の切れ目で
+  }
+
+  &__lead {
+    @include text(18px, 32px);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--color-text);
   }
 
   &__button {
@@ -496,6 +540,12 @@
   &__text {
     margin-top: 24px;
     color: var(--color-text-sub);
+
+    // 返信の目安：本文と分けて、少し小さく添える
+    &--note {
+      @include text(14px, 24px);
+      margin-top: 16px;
+    }
   }
 
   &__links {
@@ -543,7 +593,7 @@
     transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
 
     &::placeholder {
-      color: var(--color-text-faint);
+      color: var(--color-text-muted); // faint（2.5:1）では読みにくいので、4.5:1 以上ある muted に
     }
 
     &:focus-visible {

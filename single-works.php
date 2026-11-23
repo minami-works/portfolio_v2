@@ -198,8 +198,12 @@
           <h2 class="section__title">工夫した点</h2>
         </div>
         <ul class="notes">
-          <?php foreach ($points as $point) : ?>
-            <li class="notes__item"><?php echo esc_html($point); ?></li>
+          <?php foreach ($points as $point) :
+            // 管理画面の1行＝1項目（線で区切られる）。項目の中は「。」ごとに改行して読みやすくする
+            // （「。」の直後が 」や ） のときは、閉じかっこを次の行に送らないよう、そこでは改行しない）
+            $sentences = preg_split('/(?<=。)(?![」』）)])/u', $point, -1, PREG_SPLIT_NO_EMPTY);
+          ?>
+            <li class="notes__item"><?php echo implode('<br>', array_map('esc_html', array_map('trim', $sentences))); ?></li>
           <?php endforeach; ?>
         </ul>
       </div>
