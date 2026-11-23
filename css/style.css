@@ -423,8 +423,8 @@ button {
 .theme-toggle {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   background: none;
   border: none;
@@ -461,8 +461,8 @@ button {
 
 .hamburger {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   background: none;
   border: none;
@@ -474,7 +474,7 @@ button {
 }
 .hamburger__line {
   position: absolute;
-  left: 11px;
+  left: 13px;
   width: 18px;
   height: 2px;
   background-color: var(--color-text);
@@ -487,13 +487,13 @@ button {
   }
 }
 .hamburger__line:nth-child(1) {
-  top: 13px;
+  top: 15px;
 }
 .hamburger__line:nth-child(2) {
-  top: 19px;
+  top: 21px;
 }
 .hamburger__line:nth-child(3) {
-  top: 25px;
+  top: 27px;
 }
 .is-menu-open .hamburger__line:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
@@ -759,6 +759,7 @@ button {
 .works-filter__button {
   font-size: 14px;
   line-height: 24px;
+  min-height: 44px;
   padding: 8px 16px;
   color: var(--color-text-sub);
   background-color: var(--color-bg-card);
@@ -816,7 +817,7 @@ button {
   display: none;
 }
 .work-card__title {
-  font-size: 21px;
+  font-size: 18px;
   line-height: 32px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -965,7 +966,7 @@ button {
   border-top: 1px solid var(--color-line);
 }
 .note-box__title {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 32px;
   font-weight: 700;
 }
@@ -1216,7 +1217,7 @@ button {
 }
 
 .scope__title {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 32px;
   font-weight: 700;
 }
@@ -1279,8 +1280,8 @@ button {
   border-top: 1px solid var(--color-line);
 }
 .tablet-screen__label {
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 32px;
   margin-bottom: 24px;
   font-weight: 700;
 }
@@ -1299,8 +1300,8 @@ button {
   border-top: 1px solid var(--color-line);
 }
 .sp-screens__label {
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 32px;
   margin-bottom: 24px;
   font-weight: 700;
 }
@@ -1473,6 +1474,24 @@ button {
 }
 .page-content > * + * {
   margin-top: 24px;
+}
+
+@media (max-width: 760px) {
+  .work-card__links .text-link,
+  .work-hero__back,
+  .contact__links .text-link,
+  .pager__back .text-link,
+  .page-content > p > .text-link:only-child,
+  .footer__link,
+  .header__logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .work-card__links,
+  .contact__links {
+    row-gap: 0;
+  }
 }
 
 @keyframes hero-fade {

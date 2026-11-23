@@ -130,7 +130,7 @@
 // 担当範囲：白いカード＋緑の点の箇条書きはやめ、料金欄と同じ「線で区切る一覧」にする
 .scope {
   &__title {
-    @include text(16px, 32px);
+    @include text(18px, 32px); // h3 は 18px にそろえる
     font-weight: 700;
   }
 
@@ -204,7 +204,7 @@
   border-top: 1px solid var(--color-line);
 
   &__label {
-    @include text(15px, 24px);
+    @include text(18px, 32px); // h3 は 18px にそろえる
     margin-bottom: 24px;
     font-weight: 700;
   }
@@ -225,7 +225,7 @@
   border-top: 1px solid var(--color-line);
 
   &__label {
-    @include text(15px, 24px);
+    @include text(18px, 32px); // h3 は 18px にそろえる
     margin-bottom: 24px;
     font-weight: 700;
   }

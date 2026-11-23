@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const isDark = root.classList.toggle('is-dark');
 
+      // スマホのブラウザ上部の色も、ページの背景色に合わせて切り替える
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) themeColor.setAttribute('content', isDark ? '#1f2420' : '#f7f7f3');
+
       void document.body.offsetHeight; // ここで新しい色を確定させる
       requestAnimationFrame(() => {
         requestAnimationFrame(() => noTransition.remove()); // 描画が終わってから元に戻す

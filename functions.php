@@ -42,10 +42,15 @@ add_filter('wp_resource_hints', 'mw2_resource_hints', 10, 2);
    初期表示はライトモード。ボタンでダークを選んだ人だけ、次回もダークで表示する */
 function mw2_theme_mode_script() {
   ?>
+  <!-- スマホのブラウザ上部（アドレスバー周り）の色を、ページの背景色に合わせる。ダークモードの時は下のJSで切り替える -->
+  <meta name="theme-color" content="#f7f7f3">
   <script>
     (function () {
       try {
-        if (localStorage.getItem('mw2-theme') === 'dark') document.documentElement.classList.add('is-dark');
+        if (localStorage.getItem('mw2-theme') === 'dark') {
+          document.documentElement.classList.add('is-dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1f2420');
+        }
       } catch (e) {}
     })();
   </script>

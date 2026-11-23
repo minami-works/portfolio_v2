@@ -9,4 +9,5 @@
 @use "footer";
 @use "top";
 @use "work-detail";
+@use "tap-target"; // 各パーツの指定を上書きするので、後ろの方で読み込む
 @use "animation";

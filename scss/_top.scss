@@ -244,6 +244,7 @@
 
   &__button {
     @include text(14px, 24px);
+    min-height: 44px; // スマホで押しやすい高さ
     padding: 8px 16px;
     color: var(--color-text-sub);
     background-color: var(--color-bg-card);
@@ -310,7 +311,8 @@
   }
 
   &__title {
-    @include text(21px, 32px);
+    // h3 はすべて 18px にそろえる（h2 の 24px／30px から、はっきり一段小さく）
+    @include text(18px, 32px);
     font-weight: 700;
     letter-spacing: 0.06em;
   }
@@ -473,7 +475,7 @@
   border-top: 1px solid var(--color-line);
 
   &__title {
-    @include text(16px, 32px);
+    @include text(18px, 32px); // h3 は 18px にそろえる
     font-weight: 700;
   }
 

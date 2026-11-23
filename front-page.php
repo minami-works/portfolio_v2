@@ -260,7 +260,7 @@
 
       <div class="cta">
         <p class="cta__text"><strong class="cta__lead">仕様が決まる前のご相談も受け付けています。</strong>ご希望の内容とご予算をお聞かせいただければ、対応範囲とお見積もりをお返しします。</p>
-        <a class="button button--primary cta__button" href="#contact">お問い合わせフォームへ</a>
+        <a class="button button--primary cta__button" href="#contact">相談してみる</a>
       </div>
     </div>
   </section>

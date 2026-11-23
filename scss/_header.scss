@@ -126,8 +126,8 @@
 .theme-toggle {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px; // スマホで押しやすい 44px
+  height: 44px;
   padding: 0;
   background: none;
   border: none;
@@ -174,8 +174,8 @@
 // ---------- ハンバーガー（SPのみ） ----------
 .hamburger {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px; // スマホで押しやすい 44px
+  height: 44px;
   padding: 0;
   background: none;
   border: none;
@@ -186,7 +186,7 @@
 
   &__line {
     position: absolute;
-    left: 11px;
+    left: 13px; // (44 - 18) ÷ 2
     width: 18px;
     height: 2px;
     background-color: var(--color-text);
@@ -198,9 +198,9 @@
       transition: transform 0.25s, opacity 0.25s;
     }
 
-    &:nth-child(1) { top: 13px; }
-    &:nth-child(2) { top: 19px; }
-    &:nth-child(3) { top: 25px; }
+    &:nth-child(1) { top: 15px; }
+    &:nth-child(2) { top: 21px; }
+    &:nth-child(3) { top: 27px; }
 
     // 開いたら × に
     .is-menu-open &:nth-child(1) { transform: translateY(6px) rotate(45deg); }
