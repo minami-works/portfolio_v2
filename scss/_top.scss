@@ -373,6 +373,7 @@
     display: grid;
     grid-template-columns: 6em 1fr;
     gap: 16px;
+    align-content: start; // 隣の項目が2行になって高さが伸びても、見出しと値を上にそろえたまま（余白を間に入れない）
   }
 
   &__key {
@@ -382,6 +383,11 @@
 
   &__value {
     @include text(14px, 24px);
+  }
+
+  // 「コーディング /」のように1項目ずつ塊にして、項目の途中や「/」の前で改行しないようにする
+  &__part {
+    display: inline-block;
   }
 
   // 詳細ページ版：PCでは3列に並べ、上下に線

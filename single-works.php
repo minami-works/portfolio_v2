@@ -53,7 +53,7 @@
       <?php
         // 空欄の項目は表示しない
         $meta = array_filter(array(
-          '担当'     => mw2_join(mw2_field('role')),
+          '担当'     => mw2_role(),
           '使用技術' => mw2_field('tech'),
           '制作期間' => mw2_field('period'),
         ));
@@ -62,7 +62,7 @@
       <?php if ($meta) : ?>
         <dl class="work-meta work-meta--detail">
           <?php foreach ($meta as $key => $value) : ?>
-            <div class="work-meta__item"><dt class="work-meta__key"><?php echo esc_html($key); ?></dt><dd class="work-meta__value"><?php echo esc_html($value); ?></dd></div>
+            <div class="work-meta__item"><dt class="work-meta__key"><?php echo esc_html($key); ?></dt><dd class="work-meta__value"><?php echo mw2_meta_html($value); // 関数内でエスケープ済み ?></dd></div>
           <?php endforeach; ?>
         </dl>
       <?php endif; ?>

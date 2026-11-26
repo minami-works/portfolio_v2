@@ -870,6 +870,7 @@ button {
   display: grid;
   grid-template-columns: 6em 1fr;
   gap: 16px;
+  align-content: start;
 }
 .work-meta__key {
   font-size: 13px;
@@ -879,6 +880,9 @@ button {
 .work-meta__value {
   font-size: 14px;
   line-height: 24px;
+}
+.work-meta__part {
+  display: inline-block;
 }
 .work-meta--detail {
   margin-top: 40px;

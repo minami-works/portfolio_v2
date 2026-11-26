@@ -88,7 +88,7 @@
             $work_tags  = (!$work_tags || is_wp_error($work_tags)) ? array() : $work_tags;
             $slugs      = implode(' ', wp_list_pluck($work_tags, 'slug'));
             $image      = mw2_field('image_pc');
-            $role       = mw2_join(mw2_field('role'));
+            $role       = mw2_role();
             $tech       = mw2_field('tech');
             $period     = mw2_field('period');
             $github_url = mw2_field('github_url');
@@ -113,7 +113,7 @@
                 <?php if ($meta) : ?>
                   <dl class="work-meta">
                     <?php foreach ($meta as $key => $value) : ?>
-                      <div class="work-meta__item"><dt class="work-meta__key"><?php echo esc_html($key); ?></dt><dd class="work-meta__value"><?php echo esc_html($value); ?></dd></div>
+                      <div class="work-meta__item"><dt class="work-meta__key"><?php echo esc_html($key); ?></dt><dd class="work-meta__value"><?php echo mw2_meta_html($value); // 関数内でエスケープ済み ?></dd></div>
                     <?php endforeach; ?>
                   </dl>
                 <?php endif; ?>

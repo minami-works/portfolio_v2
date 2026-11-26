@@ -31,10 +31,14 @@ acf_add_local_field_group(array(
     mw2_acf_text('field_mw2_work_ja', 'work_ja', 'サブタイトル（日本語）', '例：書店サイト・コーディング'),
     array(
       'key' => 'field_mw2_role', 'name' => 'role', 'label' => '担当（role）', 'type' => 'checkbox',
+      // 並び順＝制作の流れ。表示もこの順番になる（functions.php の mw2_role()）
+      // 左が「値」（データベースに保存される文字）、右が「表示名」（管理画面とサイトに出る文字）
+      // 値を書き換えると保存済みの投稿と合わなくなるので、名前を変えたい時は右側だけ変える
       'choices' => array(
+        'デザイン'     => 'デザイン',
         'コーディング' => 'コーディング',
+        'JS実装'       => 'JavaScript実装',
         'WordPress化'  => 'WordPress化',
-        'JS実装'       => 'JS実装',
       ),
       'allow_custom' => 1, 'save_custom' => 1, 'return_format' => 'value', 'layout' => 'horizontal',
     ),

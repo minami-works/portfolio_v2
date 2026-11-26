@@ -208,10 +208,21 @@ function mw2_lines($text) {
   return array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $text))));
 }
 
-/* role（チェックボックス＝配列 / テキスト どちらでも）を「 / 」区切りの文字列にする */
-function mw2_join($value) {
-  if (is_array($value)) return implode(' / ', array_filter($value));
-  return (string) $value;
+/*
+ * 担当・使用技術などを「 / 」区切りで出力する（エスケープ済みのHTMLを返す）
+ * - チェックボックス（配列）でも「A / B」形式のテキストでもOK
+ * - 1項目ずつ <span> で囲み、改行は項目の切れ目だけで起こるようにする
+ *   （行頭に「/」が来たり、項目の途中で折り返したりしない）
+ */
+function mw2_meta_html($value) {
+  $parts = is_array($value) ? $value : explode('/', (string) $value);
+  $parts = array_values(array_filter(array_map('trim', $parts), 'strlen'));
+  $last  = count($parts) - 1;
+  $html  = array();
+  foreach ($parts as $i => $part) {
+    $html[] = '<span class="work-meta__part">' . esc_html($part) . ($i < $last ? ' /' : '') . '</span>';
+  }
+  return implode(' ', $html);
 }
 
 /* 2桁の通し番号（01, 02 ...）。順序（menu_order）→投稿日の順で数える */
@@ -250,6 +261,28 @@ add_filter('big_image_size_threshold', '__return_false');
 /* ACF未導入でも画面が真っ白にならないように */
 function mw2_field($name, $post_id = false) {
   return function_exists('get_field') ? get_field($name, $post_id) : '';
+}
+
+/*
+ * 担当（role）を、選択肢の並び（＝制作の流れ）の順にそろえ、表示名にして返す
+ * - ACFは「保存した時の順番」で値を持っているので、並び替える前に保存した投稿もここで並び直す
+ * - 値（例：JS実装）は表示名（例：JavaScript実装）に置き換える
+ * - 選択肢にない値（手入力したもの）はそのままの文字で最後に回す
+ */
+function mw2_role($post_id = false) {
+  $roles = mw2_field('role', $post_id);
+  if (!is_array($roles) || !function_exists('acf_get_field')) return $roles;
+  $field   = acf_get_field('field_mw2_role');
+  $choices = $field ? $field['choices'] : array();
+  $order   = array_keys($choices);
+  usort($roles, function ($a, $b) use ($order) {
+    $ia = array_search($a, $order, true);
+    $ib = array_search($b, $order, true);
+    return ($ia === false ? PHP_INT_MAX : $ia) <=> ($ib === false ? PHP_INT_MAX : $ib);
+  });
+  return array_map(function ($value) use ($choices) {
+    return isset($choices[$value]) ? $choices[$value] : $value;
+  }, $roles);
 }
 
 /* ACFフィールド定義 */
