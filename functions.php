@@ -91,6 +91,11 @@ function mw2_ogp() {
     $description = $overview ? wp_trim_words(wp_strip_all_tags($overview), 80, '…') : $default_description;
     $url         = get_permalink();
     $type        = 'article';
+  } elseif (is_page('pricing')) {
+    // 料金ページ：トップと同じ説明文だと検索結果で見分けがつかないので、専用の説明文にする
+    $description = 'Webコーダー Minami Gouda の料金ページ。LP制作・WordPressサイト制作・公開作業の代行・保守の料金（税込）と、制作の流れをまとめています。';
+    $url         = get_permalink();
+    $type        = 'article';
   } else {
     $description = $default_description;
     $url         = is_front_page() ? home_url('/') : get_permalink();
@@ -241,6 +246,14 @@ function mw2_work_ids() {
 function mw2_work_number($post_id) {
   $index = array_search($post_id, mw2_work_ids(), true);
   return false === $index ? '' : sprintf('%02d', $index + 1);
+}
+
+/* 料金ページ（スラッグ pricing の固定ページ）のURL。公開していなければ空文字を返す
+   ヘッダー・フッター・トップの「料金の詳細」ボタンで使う */
+function mw2_pricing_page_url() {
+  $page = get_page_by_path('pricing');
+  if (!$page || 'publish' !== get_post_status($page)) return '';
+  return get_permalink($page);
 }
 
 /* ACFの画像（配列）からURLを取り出す

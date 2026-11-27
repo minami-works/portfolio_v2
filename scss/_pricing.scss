@@ -1,0 +1,384 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// =========================================================
+// 料金（料金ページ page-pricing.php とトップの「料金の目安」）
+// 行間・上下の余白はすべて 8px の倍数
+// =========================================================
+
+// ---------- 料金表（トップ・料金ページで共通） ----------
+.price-table {
+  border-top: 1px solid var(--color-line-strong);
+  border-bottom: 1px solid var(--color-line-strong);
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    align-items: center;
+    padding-block: 24px;
+
+    @include pc {
+      grid-template-columns: 200px 1fr auto;
+      gap: 32px;
+    }
+
+    // 行が2つ以上あるときは、行と行の間に薄い線
+    & + & {
+      border-top: 1px solid var(--color-line);
+    }
+
+    // プラン名がない1行だけの表（公開作業の代行・保守）
+    // SP：内容の下に料金　PC：内容と料金を横に並べる
+    &--single {
+      grid-template-columns: minmax(0, 1fr);
+
+      @include pc {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+    }
+  }
+
+  &__name {
+    @include text(16px, 32px);
+    font-weight: 700;
+    // プラン名は単語の途中（「デザインデータ支／給」）で折り返さない。
+    // 折り返してよい所はHTMLの <wbr> で指定する（例：デザインデータ<wbr>支給）
+    word-break: keep-all;
+  }
+
+  // 1行だけの表の「内容」（プラン名より長い文なので、太字にせず本文の大きさで）
+  &__summary {
+    @include text(15px, 32px);
+    color: var(--color-text-sub);
+  }
+
+  // SP：料金の下に注記
+  &__note {
+    @include text(14px, 24px);
+    grid-column: 1 / -1;
+    grid-row: 2;
+    color: var(--color-text-muted);
+
+    @include pc {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+
+  &__price {
+    @include text(20px, 32px);
+    grid-column: -2; // いつも一番右の列に置く（内容のない「それ以上の規模」の行でも、金額の列にそろえる）
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap; // 「132,000円〜」が途中で折り返さないように
+
+    // 金額ではなく「お見積もり」と書く行：金額より目立たせない
+    &--ask {
+      @include text(15px, 32px);
+      font-weight: 500;
+      color: var(--color-text-sub);
+    }
+  }
+}
+
+.pricing {
+  // 表の下の「表示価格はすべて税込です」
+  &__tax {
+    @include text(14px, 24px);
+    margin-top: 16px;
+    color: var(--color-text-sub);
+  }
+
+  // 料金ページへのリンク
+  &__more {
+    margin-top: 32px;
+  }
+}
+
+// ---------- 料金のカード ----------
+.price-plans {
+  display: grid;
+  gap: 24px;
+
+  @include pc {
+    gap: 32px;
+  }
+}
+
+.price-plan {
+  padding: 24px;
+  background-color: var(--color-bg-card);
+  border-radius: $radius-l;
+
+  @include pc {
+    padding: 40px;
+  }
+
+  &__title {
+    @include text(20px, 32px);
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    @include pc {
+      @include text(24px, 40px);
+      margin-bottom: 24px;
+    }
+  }
+
+  // 表の下の注記（LP制作は「デザインデータ支給」「デザイン込み」の2つに分かれる）
+  &__notes {
+    display: grid;
+    gap: 24px;
+    margin-top: 24px;
+  }
+}
+
+// 注記の箇条書き
+.price-notes {
+  &__title {
+    @include text(14px, 24px); // カードの見出し（h2）より、はっきり小さく
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  &__list {
+    display: grid;
+    gap: 8px;
+  }
+
+  &__item {
+    @include text(14px, 24px);
+    position: relative; // 行頭の点（::before）の基準
+    padding-left: 16px;
+    color: var(--color-text-sub);
+    // 文節での改行（_base.scss の li { word-break: auto-phrase }）をやめ、行の端まで文字を詰める
+    // カードの中は幅が狭く、文節ごと次の行に送ると右側に大きな空白ができるため（制作の流れの説明文と同じ）
+    word-break: normal;
+
+    // 行頭の小さな点
+    &::before {
+      content: "";
+      position: absolute; // 基準は親の __item（position: relative）
+      top: 10px; // 行の高さ24pxの真ん中（(24 - 4) ÷ 2）
+      left: 4px;
+      width: 4px;
+      height: 4px;
+      background-color: var(--color-line-strong);
+      border-radius: 50%;
+    }
+  }
+
+  // 保守の「対象の例／対象外」：カードの中に箱は入れず、左の線で1段下がった内容だと示す
+  &__detail {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+    padding-left: 16px;
+    border-left: 2px solid var(--color-line);
+  }
+
+  &__detail-key {
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  &__detail-value {
+    color: var(--color-text-sub);
+    word-break: normal; // dd にも _base.scss で auto-phrase が付いているので、ここでも普通の改行に戻す
+  }
+}
+
+// ---------- 対応について（全プラン共通） ----------
+// 料金のカードと見分けられるよう、カードにはせず上の線で区切る
+.support {
+  margin-top: 16px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-line-strong);
+
+  &__title {
+    @include text(18px, 32px); // h3 と同じ大きさ。料金のカード（h2）より控えめに
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 16px;
+    font-weight: 700;
+  }
+
+  &__sub {
+    @include text(13px, 24px);
+    font-weight: 400;
+    // グレー背景の上なので、muted ではなく sub で読みやすさ 4.5:1 以上を確保
+    color: var(--color-text-sub);
+  }
+
+  &__list {
+    margin-top: 16px;
+  }
+
+  // 「制作中の修正」の説明が長いので、横に並べず1項目1行の表にする
+  // SP：見出しの下に値　PC：見出しと値を横に並べる
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 16px;
+
+    & + & {
+      border-top: 1px solid var(--color-line);
+    }
+
+    @include pc {
+      grid-template-columns: 10em minmax(0, 1fr); // 10em：一番長い見出し「保守の軽微な修正」が1行に収まる幅
+      gap: 24px;
+    }
+  }
+
+  &__key {
+    @include text(14px, 24px);
+    color: var(--color-text-sub);
+  }
+
+  &__value {
+    @include text(16px, 32px);
+    font-weight: 500;
+  }
+}
+
+// ---------- 制作の流れ ----------
+// SP：横線で区切った縦の一覧（左にアイコン）
+// タブレット（761〜1023px）：2列×3段　広いPC（1024px〜）：3列×2段
+// 列の間に縦線を引いて区切る
+//   ※ 6つを1列に並べると、本文幅（最大960px）では1つ160pxほどになり説明文が読みにくいので3列まで
+.flow {
+  border-top: 1px solid var(--color-line-strong);
+
+  @include pc {
+    display: grid; // 土台の grid はここで指定（横に並べるのは PC だけなので、@media の中）
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px 64px; // 列の間 64px のちょうど真ん中（32px）に縦線を引く
+    border-top: none;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 8px 16px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--color-line);
+
+    // PC：1つのステップの中は、見出し → アイコン → 説明 の縦積み
+    // subgrid：親（.flow）の行を3行ぶん借りて、横に並んだステップ同士で「見出し・アイコン・説明」の高さをそろえる
+    // （STEP 3 だけラベルがあって見出しが高くなっても、同じ段のアイコンの位置がずれない）
+    @include pc {
+      grid-row: span 3;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: subgrid;
+      gap: 24px;
+      position: relative; // 縦線（::before）の基準
+      padding-block: 0;
+      border-bottom: none;
+
+      // 列の間の縦線：border-left だと線の分だけ列の幅が変わるので、列の外（左の隙間の真ん中）に浮かせて引く
+      &::before {
+        content: "";
+        position: absolute; // 基準は親の __step（position: relative）
+        top: 0;
+        bottom: 0;
+        left: -32px; // 列の間 64px の半分
+        border-left: 1px solid var(--color-line);
+      }
+    }
+
+    // 各段の左端のステップには、左に縦線を引かない（2列のときは1・3・5番目、3列のときは1・4番目）
+    @media (min-width: $breakpoint) and (max-width: 1023px) {
+      &:nth-child(2n + 1)::before {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      &:nth-child(3n + 1)::before {
+        display: none;
+      }
+    }
+  }
+
+  // 「STEP 1」＋見出し＋ラベル（デザイン込みのプラン）
+  &__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // 「STEP 1」の枠を文字の幅に縮める
+    gap: 8px;
+  }
+
+  // 「STEP 1」の枠：border だと上下で2px増えて行の高さ（24px）が8の倍数からずれるので、
+  // 内側の影（inset）で線を描く（影は高さに含まれない）
+  &__number {
+    @include text(12px, 24px);
+    padding-inline: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-green-text);
+    border-radius: 4px; // 押せないラベルなので、丸ではなく小さな角丸（タグと同じルール）
+    box-shadow: inset 0 0 0 1px var(--color-green-light);
+  }
+
+  &__title {
+    @include text(16px, 32px);
+    font-weight: 700;
+
+    @include pc {
+      @include text(18px, 32px); // h3 は 18px にそろえる
+    }
+  }
+
+  // アイコン
+  // SP：細い線の丸に入れて左の列に置き、見出しと説明の2行分の高さをとる
+  //    （HTMLでは見出しの後ろにあるが、grid-row / grid-column で左上に置く）
+  // PC：丸はなくし、少し大きくして見出しと説明の間に置く。見出し・説明と同じく左にそろえる
+  &__icon {
+    display: grid;
+    place-items: center; // アイコンを丸の真ん中に
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    align-self: start; // 説明が長くて行が伸びても、丸が縦に伸びないように
+    width: 48px;
+    height: 48px;
+    color: var(--color-green-text); // アイコンの色（SVGの fill="currentColor" がこの色になる）
+    border: 1px solid var(--color-green-light);
+    border-radius: 50%;
+
+    @include pc {
+      grid-row: auto;
+      grid-column: auto;
+      justify-self: start;
+      width: auto;
+      height: auto;
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+  &__icon-svg {
+    width: 24px;
+    height: 24px;
+
+    @include pc {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &__text {
+    @include text(15px, 32px);
+    color: var(--color-text-sub);
+    // 文節での改行（_base.scss の p { word-break: auto-phrase }）をやめ、行の端まで文字を詰める
+    // 細い列で文節ごと次の行に送ると、右側に大きな空白ができて行の長さがばらばらに見えるため
+    word-break: normal;
+  }
+}

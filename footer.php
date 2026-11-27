@@ -7,8 +7,13 @@
   <div class="footer__inner">
     <p class="footer__copy">&copy; <?php echo esc_html(wp_date('Y')); // date() はUTCなので、サイトのタイムゾーン（日本時間）で年を出す wp_date() を使う ?> Minami Gouda</p>
     <ul class="footer__nav">
-      <?php foreach (array('works' => '制作実績', 'pricing' => '料金', 'contact' => 'お問い合わせ') as $id => $label) : ?>
-        <li><a class="footer__link" href="<?php echo esc_url($home . '#' . $id); ?>"><?php echo esc_html($label); ?></a></li>
+      <?php
+        $pricing_url = mw2_pricing_page_url();
+        foreach (array('works' => '制作実績', 'pricing' => '料金', 'contact' => 'お問い合わせ') as $id => $label) :
+          // 「料金」だけは料金ページへ（公開するまでは、トップの料金セクションへ）
+          $href = ('pricing' === $id && $pricing_url) ? $pricing_url : $home . '#' . $id;
+      ?>
+        <li><a class="footer__link" href="<?php echo esc_url($href); ?>"><?php echo esc_html($label); ?></a></li>
       <?php endforeach; ?>
       <li><a class="footer__link" href="<?php echo esc_url($privacy_url); ?>">プライバシーポリシー</a></li>
     </ul>

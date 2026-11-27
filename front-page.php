@@ -233,30 +233,38 @@
     <div class="container">
       <div class="section__head">
         <h2 class="section__title" id="pricing-title">料金の目安</h2>
-        <p class="section__lead">ページ数・仕様により変動します。</p>
+        <p class="section__lead">ページ数・機能によりお見積もりいたします。</p>
       </div>
 
+      <!-- トップでは各メニューの最低料金だけを見せ、細かい条件は料金ページ（page-pricing.php）にまとめる -->
       <dl class="price-table">
         <div class="price-table__row">
           <dt class="price-table__name">LP制作</dt>
-          <dd class="price-table__note">ボリューム・アニメーションの有無により変動</dd>
-          <dd class="price-table__price">¥7,000〜¥25,000</dd>
+          <dd class="price-table__note">デザインデータ支給の場合（デザイン込みは33,000円〜）</dd>
+          <dd class="price-table__price">11,000円〜</dd>
+        </div>
+        <div class="price-table__row">
+          <dt class="price-table__name">WordPress<wbr>サイト制作</dt>
+          <dd class="price-table__note">デザインデータ支給・10ページ程度の場合（デザイン込みは165,000円〜）</dd>
+          <dd class="price-table__price">132,000円〜</dd>
+        </div>
+        <div class="price-table__row">
+          <dt class="price-table__name">公開作業の代行</dt>
+          <dd class="price-table__note">サーバー・ドメインの設定、WordPressのインストール、SSL（https化）の設定など</dd>
+          <dd class="price-table__price">11,000円〜</dd>
+        </div>
+        <div class="price-table__row">
+          <dt class="price-table__name">保守</dt>
+          <dd class="price-table__note">WordPress本体・プラグインの更新、バックアップ、軽微な修正</dd>
+          <dd class="price-table__price">月11,000円</dd>
         </div>
       </dl>
-      <p class="pricing__sub">文字修正は1か所から、お気軽にご相談ください。</p>
+      <p class="pricing__tax">表示価格はすべて税込です。</p>
 
-      <div class="pricing__notes">
-        <div class="note-box">
-          <h3 class="note-box__title">修正対応について</h3>
-          <p class="note-box__text">文言・色・余白の調整、画像差し替えなどの軽微な修正は「1回」としてまとめてご連絡ください。</p>
-          <p class="note-box__text">レイアウトの大幅変更・ページ追加・<span class="nowrap">デザイン方向の変更は、</span>別途お見積もりいたします。</p>
-        </div>
-        <div class="note-box">
-          <h3 class="note-box__title">JS実装の範囲について</h3>
-          <p class="note-box__text">ハンバーガーメニュー・フェードイン・TOPへ戻るボタン・アコーディオンは標準で対応します。</p>
-          <p class="note-box__text">タブ切り替え・モーダル・ローディングなどは、内容に応じてご相談ください。</p>
-        </div>
-      </div>
+      <?php $pricing_url = mw2_pricing_page_url(); ?>
+      <?php if ($pricing_url) : // 料金ページ（固定ページ）を公開するまでは、リンクを出さない ?>
+        <p class="pricing__more"><a class="button button--outline" href="<?php echo esc_url($pricing_url); ?>">料金の詳細と制作の流れを見る</a></p>
+      <?php endif; ?>
 
       <div class="cta">
         <p class="cta__text"><strong class="cta__lead">仕様が決まる前のご相談も受け付けています。</strong>ご希望の内容とご予算をお聞かせいただければ、対応範囲とお見積もりをお返しします。</p>
