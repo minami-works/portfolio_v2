@@ -82,15 +82,16 @@ get_header(); ?>
       <section class="price-plan" id="plan-wordpress" aria-labelledby="plan-wordpress-title">
         <h2 class="price-plan__title" id="plan-wordpress-title">WordPressサイト制作</h2>
         <dl class="price-table">
-          <div class="price-table__row">
-            <dt class="price-table__name">デザイン込み</dt>
-            <dd class="price-table__note">10ページ程度・オリジナルテーマ</dd>
-            <dd class="price-table__price">165,000円〜</dd>
-          </div>
+          <!-- LP制作と同じく「データ支給 → デザイン込み」（安い順）に並べる -->
           <div class="price-table__row">
             <dt class="price-table__name">デザインデータ<wbr>支給</dt>
             <dd class="price-table__note">10ページ程度・オリジナルテーマ</dd>
             <dd class="price-table__price">132,000円〜</dd>
+          </div>
+          <div class="price-table__row">
+            <dt class="price-table__name">デザイン込み</dt>
+            <dd class="price-table__note">10ページ程度・オリジナルテーマ</dd>
+            <dd class="price-table__price">165,000円〜</dd>
           </div>
         </dl>
 
