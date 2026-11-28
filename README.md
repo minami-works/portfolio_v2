@@ -10,6 +10,7 @@ Webコーダー Minami Gouda のポートフォリオサイト用 WordPress オ�
 4. 「設定 > 表示設定」→ ホームページの表示を「固定ページ」にし、空の固定ページ（例：トップ）を指定
 5. 「設定 > パーマリンク」→「投稿名」を選んで保存（/works/〇〇/ が404になる場合もここで保存し直す）
 6. 「設定 > 一般」でサイトのタイトル、「外観 > カスタマイズ > サイト基本情報」でサイトアイコンを設定
+7. 「固定ページ > 新規追加」でタイトル「料金」・スラッグ `pricing` のページを公開する（本文は空でOK。`page-pricing.php` が自動で使われ、ヘッダー・フッターの「料金」もこのページに向く）
 
 ## Worksの登録
 - 「Works > 実績タグ」で絞り込み用タグを作る（例：LP制作 / WordPress）
@@ -30,6 +31,7 @@ Webコーダー Minami Gouda のポートフォリオサイト用 WordPress オ�
 
 ## SCSS
 - `scss/style.scss` → `css/style.css` にコンパイル
+- ページごとのファイル：`_top.scss`（トップ）／`_pricing.scss`（料金表・料金ページ）／`_page.scss`（固定ページ共通の見出し・目次）／`_work-detail.scss`（実績詳細）。ボタンや相談への誘導（`.cta`）など、複数のページで使う部品は `_components.scss`
 - Live Sass Compiler の出力先を `/css` に設定（`liveSassCompile.settings.formats` の `savePath`）
 - 色はダークモード対応のため `scss/_variables.scss` の CSSカスタムプロパティ（`--color-〇〇`）で管理
 - 行間は **8pxの倍数** でそろえる。文字サイズと行間は `@include text(14px, 24px);` のようにセットで書く（8の倍数でないとコンパイル時にエラーで知らせる）
@@ -46,6 +48,7 @@ Webコーダー Minami Gouda のポートフォリオサイト用 WordPress オ�
 | --- | --- |
 | front-page.php | トップ（hero / about / skills / works / pricing / contact） |
 | single-works.php | 実績の詳細ページ |
+| page-pricing.php | 料金ページ（料金表・対応について・制作の流れ・相談への誘導） |
 | header.php / footer.php | 共通ヘッダー・フッター |
 | index.php | 予備テンプレート・404 |
 | functions.php | 読み込み・カスタム投稿works・実績タグ・ヘルパー関数・OGP |

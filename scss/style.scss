@@ -7,7 +7,9 @@
 @use "components";
 @use "header";
 @use "footer";
+@use "page";        // 固定ページ共通（見出し・目次）
 @use "top";
+@use "pricing";     // 料金表（トップと共通）・料金ページ
 @use "work-detail";
 @use "tap-target"; // 各パーツの指定を上書きするので、後ろの方で読み込む
 @use "animation";

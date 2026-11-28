@@ -113,3 +113,41 @@
     }
   }
 }
+
+// ---------- 相談への誘導（トップの料金・料金ページの最後） ----------
+// 緑の帯の箱はやめ、上の線で区切ったまとめの一段にする
+// 太字の一文（要点）＋ 細い一文（詳しく）の2段で、文の途中で折り返さないようにする
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-line-strong);
+
+  @include pc {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  &__text {
+    @include text(14px, 24px);
+    color: var(--color-text-sub);
+    word-break: auto-phrase; // 折り返すときは「お聞／かせ」のような単語の途中ではなく、文節の切れ目で
+  }
+
+  &__lead {
+    @include text(18px, 32px);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__button {
+    flex-shrink: 0;
+  }
+}

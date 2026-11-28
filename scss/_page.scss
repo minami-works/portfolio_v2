@@ -1,0 +1,68 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// =========================================================
+// 固定ページ共通（見出し・ページ内の目次）
+// いまは料金ページ（page-pricing.php）で使用。ほかの固定ページを作るときもこのクラスを使う
+// =========================================================
+
+// ---------- ページの見出し ----------
+.page-hero {
+  padding-block: 40px 56px;
+
+  @include pc {
+    padding-block: 64px 80px;
+  }
+
+  &__title {
+    @include text(30px, 48px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    @include pc {
+      @include text(40px, 64px);
+    }
+  }
+
+  &__lead {
+    margin-top: 16px;
+    color: var(--color-text-sub);
+  }
+
+  &__tax {
+    @include text(14px, 24px);
+    margin-top: 8px;
+    color: var(--color-text-sub);
+  }
+}
+
+// ページ内の目次：押せるものなので、絞り込みボタンと同じ丸い形
+.page-index {
+  margin-top: 32px;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__link {
+    @include text(14px, 24px);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; // スマホで押しやすい高さ
+    padding: 8px 16px;
+    color: var(--color-text-sub);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    transition: color 0.15s ease-out, border-color 0.15s ease-out;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--color-green-text);
+        border-color: var(--color-green-light);
+      }
+    }
+  }
+}

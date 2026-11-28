@@ -20,6 +20,8 @@
     'pricing' => '料金',
     'contact' => 'お問い合わせ',
   );
+  // 「料金」だけは料金ページへ（料金ページを公開するまでは、トップの料金セクションへ）
+  $pricing_url = mw2_pricing_page_url();
 ?>
 <header class="header" id="top">
   <div class="header__inner">
@@ -27,8 +29,11 @@
 
     <nav class="header__nav" id="global-nav" aria-label="グローバルナビゲーション">
       <ul class="header__list">
-        <?php foreach ($nav as $id => $label) : ?>
-          <li><a class="header__link" href="<?php echo esc_url($home . '#' . $id); ?>"><?php echo esc_html($label); ?></a></li>
+        <?php foreach ($nav as $id => $label) :
+          $is_pricing_page = ('pricing' === $id && $pricing_url);
+          $href            = $is_pricing_page ? $pricing_url : $home . '#' . $id;
+        ?>
+          <li><a class="header__link" href="<?php echo esc_url($href); ?>"<?php echo ($is_pricing_page && is_page('pricing')) ? ' aria-current="page"' : ''; ?>><?php echo esc_html($label); ?></a></li>
         <?php endforeach; ?>
       </ul>
     </nav>
